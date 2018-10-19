@@ -9,7 +9,7 @@ class CreatePosts < ActiveRecord::Migration[5.1]
       t.integer :replies_count, default: 0
       t.integer :viewed_count, default: 0
       
-      t.reference :user, foreign_key: true
+      t.references :user, foreign_key: true
 
       t.timestamps
     end
