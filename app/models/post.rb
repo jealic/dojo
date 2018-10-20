@@ -7,12 +7,7 @@ class Post < ApplicationRecord
   has_many :post_categoryships # 某 post 被刪，跟這個 post 有關的 post-category 記錄也都會沒有
   has_many :categories, through: :post_categoryships
   
-  # 設定 privacy 種類
-  enum privacy: {
-    all_users: 1,
-    only_friends: 2,
-    only_me: 3,
-  }
+
 
   # 文章是否為草稿
   scope :draft, -> {

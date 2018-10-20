@@ -1,10 +1,11 @@
 <h1>post new page</h1>
 <%= simple_form_for @post do |f| %>
   <%= f.input :title %>
-  <%= f.input :image, as: :file %>
   <%= f.input :content %>
-  <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: {multiple: true} %>
-  <%= f.input :privacy, as: :radio_buttons, collection: Post.privacies, label_method: :first, value_method: :first, checked: @post.privacy %>
-  <%= f.button :submit, 'Save Draft', name: 'commit' if @post.draft == true %>
-  <%= f.button :submit, 'Published', name: 'commit' %>
+  <%= f.input :image, as: :file %>
+  <%= f.input :privacy, as: :radio_buttons, collection: [['All', '1'], ['Only Friends', '2'], ['Only Me', '3']], label_method: :first, value_method: :first, checked: ['All', '1'], wrapper: :vertical_collection_inline %>
+  <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: {multiple: true}, wrapper: :vertical_collection_inline %>
+  <h4>Status:</h4>
+  <%= f.button :submit, 'Save as Draft', class: 'btn btn-outline-dark', name: 'commit' if @post.draft == true %>
+  <%= f.button :submit, 'Publish', name: 'commit', class: 'btn btn-outline-info' %>
 <% end %>
