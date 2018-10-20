@@ -5,8 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :posts
-  has_many :replies
-  has_many :collects
+  has_many :replies, dependent: :destroy
+  has_many :collects, dependent: :destroy
   # 一個 user 收藏多筆 post，同一個 post 可以被不同的 user 收藏
   has_many :collected_posts, through: :collects, source: :post
   has_many :friendships #自關聯，有多個朋友
