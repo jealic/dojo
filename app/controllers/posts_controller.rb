@@ -10,5 +10,15 @@ class PostsController < ApplicationController
     @post = Post.new
     @categories = Category.all
   end
+
+  def create
+    @post = Post.new(post_params)
+    @post.user = current_user
+  end
   
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :description, :image, :draft, :privacy, :category_ids => [])
+  end
 end
