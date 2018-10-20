@@ -9,7 +9,7 @@ class Post < ApplicationRecord
   
   # 設定 privacy 種類
   enum privacy: {
-    public: 1,
+    all_users: 1,
     only_friends: 2,
     only_me: 3,
   }
