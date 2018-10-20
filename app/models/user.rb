@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :posts, dependent: :destroy
+  has_many :posts
   has_many :replies, dependent: :destroy
   has_many :collects, dependent: :destroy
   # 一個 user 收藏多筆 post，同一個 post 可以被不同的 user 收藏

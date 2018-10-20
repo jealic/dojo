@@ -28,17 +28,19 @@ namespace :dev do
   
   task fake_post: :environment do
     Post.destroy_all
-    rand(25..50).times do
-      user = User.all.sample
-      post = User.posts.build(
-        title: FFaker::Book.title,
-        content: FFkaer::Book.description,
-        image: File.open(Rails.root.join("public/post-img/#{rand(1..15)}.jpg"))
-        draft: [true, false, false, false].sample,
-        privacy: rand(1..3)
-      )
+    User.all.each do |user|
+      rand(3..10).times do |i|
+        Post.create!(
+          user: user,
+          title: FFaker::Book.title,
+          content: FFaker::Book.description,
+          draft: [true, false, false, false].sample,
+          privacy: rand(1..3),
+          image: File.open("#{Rails.root}/public/post-img/#{rand(1..15)}.jpg")
+        )
+      end
+      puts "created #{user.name}'s #{user.posts.count} posts"
     end
-    puts "created #{user.posts.count} #{user.name}'s posts"
   end
 
   
