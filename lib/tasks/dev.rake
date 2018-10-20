@@ -43,5 +43,12 @@ namespace :dev do
     end
   end
 
+  task fake_post_category: :environment do
+    Post.all.each do |post|
+      post.categories << Category.all.sample
+    end
+    puts "All posts have a category."
+  end
+
   
 end

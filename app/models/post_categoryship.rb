@@ -1,6 +1,5 @@
 class PostCategoryship < ApplicationRecord
-  validates_uniqueness_of :user_id, scope: :friend_id 
-  # table 上，只能有一筆 同樣的 friend_id - user_id 的組合，不可以重複建製多筆同樣的資料
+  validates :post_id, uniqueness: { scope: :category_id }
 
   belongs_to :post
   belongs_to :category
