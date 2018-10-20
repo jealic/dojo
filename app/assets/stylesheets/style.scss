@@ -34,3 +34,27 @@
   box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
+.page-link {
+  color: #18a2b8;
+  border: 1px solid #18a2b8;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #18a2b8;
+  border-color: #18a2b8;
+}
+
+.page-item.disabled .page-link {
+  border-color: #18a2b8;
+}
+
+.page-item:hover .page-link {
+  border-color: #17d0ea;
+  background-color: #17d0ea;
+  color: #fff; 
+}
+
+.pagination {
+  padding-left: 20%;
+}
