@@ -1,1 +1,37 @@
-<h1>post 前台 view</h1>
+<div class="post-index">
+  <h1 style="font-size: 60px;">World Wild</h1>  
+</div>
+<div style="margin-top: 30px;">
+  <% @categories.each do |c| %>  
+    <span><button class="category-tag"><%= c.name %></button></span>  
+  <% end %>
+</div>
+<br>
+
+<div class="">
+  <table class="table">
+    <thead class="thead-light thin-font">
+      <tr>
+        <th class="text-center">Replies Count <%= fa_icon 'caret-down' %></th>
+        <th>Title</th>
+        <th class="text-center">Last Replied at <%= fa_icon 'caret-down' %></th>
+        <th class="text-center">Viewed Count <%= fa_icon 'caret-down' %></th>
+      </tr>
+    </thead>
+    
+    <tbody>
+      <% @posts.each do |p| %>
+        <tr>
+
+          <td class="text-center"><%= p.replies_count %></td>
+          <th><%= p.title %></th>
+          <td class="text-center"><p>還沒做 replies </p></td>
+          <td class="text-center"><p><%= fa_icon 'eye' %> 還沒做 viewed count</p></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @posts %>
+</div>
+
+
