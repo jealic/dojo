@@ -9,9 +9,14 @@
   </ul>
 </div>
 
-<div class="new-edit-input"></div>
-
 <div class="container">
+  <div class="new-edit-input">
+    <%= simple_form_for [:admin, @category], html: { class: 'form-inline'} do |f| %>
+      <%= f.input :name, label: false, placeholder: 'Enter category name' %>
+      <%= f.button :submit, class: 'btn btn-outline-info' %>
+    <% end %>
+  </div>
+
   <table class="table table-bordered">
     <thead class="thead-light">
       <tr class="row mx-0">
@@ -22,7 +27,7 @@
     <tbody>
       <% @categories.each do |c| %>
         <tr class="row mx-0">
-          <th class="col-9"><%= c.name %></th>
+          <th class="col-9"><%= c.name.capitalize %></th>
           <td class="col-3 text-center" ><%= link_to 'Edit', edit_admin_category_path(c), class: 'btn btn-outline-info btn-sm' %> <%= link_to 'Delete', admin_category_path(c), class: 'btn btn-sm btn-outline-danger', method: :delete, data: { confirm: "Are you sure?" } %></td>
         </tr>
       <% end %>
