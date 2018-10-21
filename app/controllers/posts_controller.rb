@@ -14,7 +14,17 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user = current_user
-
+    if @post.save && params[:commit] == 'Publish'
+      @post.draft = false
+      @post.save
+      flash[:notice] = "Successfully published."
+      redirect_to posts_path
+    elsif @post.save
+      redirect_to user_path(current_user)
+    else
+      flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
+      render :new
+    end
   end
 
   def show

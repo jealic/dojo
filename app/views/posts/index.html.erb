@@ -1,42 +1,39 @@
-<div class="">
-  <h1 class="page-title-h1">World Wild</h1>  
-</div>
-<div style="margin-top: 30px;">
-  <% @categories.each do |c| %>  
-    <span><button class="category-tag"><%= c.name %></button></span>  
-  <% end %>
-</div>
-<br>
+<div class="container">
+  <div class="margin-top-50">
+    <h1 class="page-title-h1">World Wild</h1>  
+  </div>
+  <div style="margin-top: 30px;">
+    <% @categories.each do |c| %>  
+      <span><button class="category-tag"><%= c.name %></button></span>  
+    <% end %>
+  </div>
+  <br>
 
-<div class="">
-  <table class="table">
-    <thead class="thead-light thin-font">
-      <tr>
-        <th class="text-center">Replies Count <%= fa_icon 'caret-down' %></th>
-        <th>Title</th>
-        <th class="text-center">Last Replied at <%= fa_icon 'caret-down' %></th>
-        <th class="text-center">Viewed Count <%= fa_icon 'caret-down' %></th>
-      </tr>
-    </thead>
-    
-    <tbody>
-      <% @posts.each do |p| %>
+  <div class="">
+    <table class="table">
+      <thead class="thead-light thin-font">
         <tr>
-
-          <td class="text-center"><%= p.replies_count %></td>
-          <th><%= link_to p.title, post_path(p)  %></th>
-          <!-- 印出本 post 最後的 reply 的 建立時間 -->
-          <td class="text-center"><%= p.replies.last.created_at.strftime("%Y-%m-%d %H:%M:%S") if p.replies.present? %></td>
-          <td class="text-center"><%= fa_icon 'eye' %> <%= p.viewed_count %></td>
+          <th class="text-center">Replies Count <%= fa_icon 'caret-down' %></th>
+          <th>Title</th>
+          <th class="text-center">Last Replied at <%= fa_icon 'caret-down' %></th>
+          <th class="text-center">Viewed Count <%= fa_icon 'caret-down' %></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      
+      <tbody>
+        <% @posts.each do |p| %>
+          <tr>
+
+            <td class="text-center"><%= p.replies_count %></td>
+            <th><%= link_to p.title, post_path(p)  %></th>
+            <!-- 印出本 post 最後的 reply 的 建立時間 -->
+            <td class="text-center"><%= p.replies.last.created_at.strftime("%Y-%m-%d %H:%M:%S") if p.replies.present? %></td>
+            <td class="text-center"><%= fa_icon 'eye' %> <%= p.viewed_count %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <%= paginate @posts %>     
 </div>
-<br>
-<%= paginate @posts %>     
-
-
-
-
-
