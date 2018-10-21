@@ -61,4 +61,17 @@
   color: #fff; 
 }
 
-/****** Post New *******/
+/****** Admin Panel Page *******/
+
+.nav-link.active {
+  border-bottom: 1px solid #5d7594;
+  color: #5d7594;
+}
+
+.panel-page-inactive {
+  color: #8fb4e5;
+}
+
+.panel-page-inactive:hover {
+  color: #5d7594;
+}

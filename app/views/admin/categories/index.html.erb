@@ -1,1 +1,31 @@
-<h1>後台 category index</h1>
+<div class="">
+  <ul class="nav">
+    <li class="nav-item">
+      <h3><%= link_to 'Category List', admin_categories_path, class: 'nav-link active' %></h3>
+    </li>
+    <li class="nav-item">
+      <h3><%= link_to 'User List', admin_users_path, class: 'nav-link panel-page-inactive' %></h3>
+    </li>
+  </ul>
+</div>
+
+<div class="new-edit-input"></div>
+
+<div class="container">
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr class="row mx-0">
+        <th class="col-9 ">Name</th>
+        <th class="col-3 text-center">Options</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categories.each do |c| %>
+        <tr class="row mx-0">
+          <th class="col-9"><%= c.name %></th>
+          <td class="col-3 text-center" ><%= link_to 'Edit', edit_admin_category_path(c), class: 'btn btn-outline-info btn-sm' %> <%= link_to 'Delete', admin_category_path(c), class: 'btn btn-sm btn-outline-danger', method: :delete, data: { confirm: "Are you sure?" } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

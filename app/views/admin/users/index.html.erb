@@ -1,0 +1,37 @@
+<div class="">
+  <ul class="nav">
+    <li class="nav-item">
+      <h3><%= link_to 'Category List', admin_categories_path, class: 'nav-link panel-page-inactive' %></h3>
+    </li>
+    <li class="nav-item">
+      <h3><%= link_to 'User List', admin_users_path, class: 'nav-link active' %></h3>
+    </li>
+  </ul>
+</div>
+
+<div class="container">
+  <table class="table table-bordered">
+    <thead class="thead-light">
+      <tr class="row mx-0">
+        <th class="col-3">Name</th>
+        <th class="col-6">Email</th>
+        <th class="col-3">Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |u| %>
+        <tr class="row mx-0">
+          <th class="col-3"><%= u.name %></th>
+          <td class="col-6"><%= u.email %></td>
+          <td class="col-3">
+            <%= simple_form_for [:admin, u], html: { class: 'form-inline'} do |f| %> 
+              <%= f.input :role, label: false, collection: [:admin, :general], include_blank: false, class: 'select-size' %>
+              <%= f.button :submit, 'Update', class: 'btn btn-sm btn-outline-info btn-margin-left' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= paginate @users %>
+</div>
