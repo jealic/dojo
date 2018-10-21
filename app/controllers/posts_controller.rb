@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
 
   def index
-    @posts = Post.page(params[:page]).per(10)
+    @posts = Post.where(draft: false).page(params[:page]).per(10)
     @categories = Category.all
   end
 
@@ -19,6 +19,10 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @reply = Reply.new
+    @replies = @post.replies.all
+    # count views
+    @post.count_views
   end
   
   private

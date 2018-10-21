@@ -25,7 +25,8 @@
 
           <td class="text-center"><%= p.replies_count %></td>
           <th><%= link_to p.title, post_path(p)  %></th>
-          <td class="text-center"><p>還沒做 replies </p></td>
+          <!-- 印出本 post 最後的 reply 的 建立時間 -->
+          <td class="text-center"><%= p.replies.last.created_at.strftime("%Y-%m-%d %H:%M:%S") if p.replies.present? %></td>
           <td class="text-center"><%= fa_icon 'eye' %> <%= p.viewed_count %></td>
         </tr>
       <% end %>

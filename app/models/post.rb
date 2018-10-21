@@ -17,4 +17,10 @@ class Post < ApplicationRecord
   scope :published, -> {
     where(draft: false)
   }
+
+  # 計算 viewed_count
+  def count_views
+    self.viewed_count += 1
+    self.save
+  end
 end
