@@ -50,6 +50,21 @@ namespace :dev do
     puts "All posts have a category."
   end
 
+  
+  task fake_reply: :environment do 
+    Reply.destroy_all
+    Post.where(draft: false).each do |post|
+      rand(3..10).times do |i|
+        Reply.create!(
+          user: User.all.sample,
+          comment: FFaker::Lorem.paragraph,
+          post: post,
+        )
+      end
+    end
+    puts "replies to posts are created successfully."
+  end
+
 
   
 end
