@@ -24,9 +24,9 @@
         <tr>
 
           <td class="text-center"><%= p.replies_count %></td>
-          <th><%= p.title %></th>
+          <th><%= link_to p.title, post_path(p)  %></th>
           <td class="text-center"><p>還沒做 replies </p></td>
-          <td class="text-center"><p><%= fa_icon 'eye' %> 還沒做 viewed count</p></td>
+          <td class="text-center"><%= fa_icon 'eye' %> <%= p.viewed_count %></td>
         </tr>
       <% end %>
     </tbody>

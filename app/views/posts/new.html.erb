@@ -1,11 +1,30 @@
-<h1>post new page</h1>
 <%= simple_form_for @post do |f| %>
-  <%= f.input :title %>
-  <%= f.input :content %>
-  <%= f.input :image, as: :file %>
-  <%= f.input :privacy, as: :radio_buttons, collection: [['All', '1'], ['Only Friends', '2'], ['Only Me', '3']], label_method: :first, value_method: :first, checked: ['All', '1'], wrapper: :vertical_collection_inline %>
-  <%= f.association :categories, as: :check_boxes, collection: @categories, input_html: {multiple: true}, wrapper: :vertical_collection_inline %>
-  <h4>Status:</h4>
-  <%= f.button :submit, 'Save as Draft', class: 'btn btn-outline-dark', name: 'commit' if @post.draft == true %>
-  <%= f.button :submit, 'Publish', name: 'commit', class: 'btn btn-outline-info' %>
+  <%= f.input :title, label: false, placeholder: 'Title' %>
+  <%= f.input :content, label: false, as: :text, :input_html => { class: 'de-height', :rows => 12 } %>
+  <label class="btn btn-outline-dark">
+    Upload File
+    <span style="display: none;">
+      <%= f.input :image, as: :file, required: true, multiple: true, class: 'form-group' %>
+    </span>
+  </label>
+  <hr>
+  
+  <div class="container">
+    <div class="row">
+      <div class="col-8">
+        <%= f.input :privacy, as: :radio_buttons, collection: [['All', '1'], ['Only Friends', '2'], ['Only Me', '3']], label_method: :first, value_method: :first, checked: ['All', '1'], wrapper: :vertical_collection_inline %>
+        <%= f.association :categories, label: false, as: :check_boxes, collection: @categories, input_html: {multiple: true}, wrapper: :vertical_collection_inline %>
+      </div>
+      <div class="col-4">
+        <div class="float-right">
+          <h5>Status:</h5>
+          <%= f.button :submit, 'Save as Draft', class: 'btn btn-outline-dark', name: 'commit' if @post.draft == true %>
+          <%= f.button :submit, 'Publish', name: 'commit', class: 'btn btn-outline-info' %>
+        </div>
+        <div class="clearfix"></div>        
+      </div>
+    </div>  
+  </div>
+  
 <% end %>
+

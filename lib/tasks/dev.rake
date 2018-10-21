@@ -50,5 +50,6 @@ namespace :dev do
     puts "All posts have a category."
   end
 
+
   
 end
