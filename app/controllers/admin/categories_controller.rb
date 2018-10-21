@@ -30,6 +30,17 @@ class Admin::CategoriesController < Admin::BaseController
     end
   end
 
+  def destroy
+    @category = Category.find(params[:id])
+    if @category.destroy
+      flash.now[:alert] = "Category #{@category.name.capitalize} has been deleted."
+    else
+      flash[:alert] = "Category #{@category.name.capitalize} belongs to a post and can't be deleted."  
+    end
+    
+    redirect_to admin_categories_path
+  end
+
   private
 
   def category_params
