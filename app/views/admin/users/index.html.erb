@@ -19,12 +19,12 @@
       </tr>
     </thead>
     <tbody>
-      <% @users.each do |u| %>
+      <% @users.each do |user| %>
         <tr class="row mx-0">
-          <th class="col-3"><%= u.name %></th>
-          <td class="col-6"><%= u.email %></td>
+          <th class="col-3"><%= user.name %></th>
+          <td class="col-6"><%= user.email %></td>
           <td class="col-3">
-            <%= simple_form_for [:admin, u], html: { class: 'form-inline'} do |f| %> 
+            <%= simple_form_for [:admin, user], html: { class: 'form-inline'} do |f| %> 
               <%= f.input :role, label: false, collection: [:admin, :general], include_blank: false, class: 'select-size' %>
               <%= f.button :submit, 'Update', class: 'btn btn-sm btn-outline-info btn-margin-left' %>
             <% end %>
