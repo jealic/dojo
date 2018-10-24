@@ -6,9 +6,9 @@
       <div class="form-inline">
         <% if @user.avatar? %>
           <%= image_tag @user.avatar, width: '300px', class: 'img-thumbnail'%>
-          <%= f.input :avatar, label: "Re-upload your picture", label_html: { class: 'btn btn-outline-info', style: "margin: 0 20px;"}, input_html: {hidden: true} %>
+          <%= f.input :avatar, label: false, input_html: { class: 'btn btn-outline-info', style: "margin: 0 10px;"}%>
         <% else %>
-          <%= f.input :avatar, label: "Upload Picture", label_html: { class: 'btn btn-outline-info', style: "margin: 0 20px;"} %>
+          <%= f.input :avatar, label: "Upload Picture", label_html: { class: 'btn btn-outline-info', style: "margin: 0 10px;"} %>
         <% end %>
       </div>
       <div class="clearfix"></div>
