@@ -35,7 +35,7 @@
     <div class="margin-top-50">
       <ul class="nav nav-tabs weight-700">
         <li class="nav-item">
-          <%= link_to 'My Post', user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
+          <%= link_to 'My Posts', user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
         </li>
         <li class="nav-item">
           <%= link_to 'My Comments', show_reply_user_path(@user), class: "nav-link #{'active' if action?('show_reply')}" %>
@@ -55,7 +55,7 @@
     
     <ul class="nav nav-tabs weight-700">
       <li class="nav-item">
-        <%= link_to "#{@user.name}'s Post", user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
+        <%= link_to "#{@user.name}'s Posts", user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
       </li>
       <li class="nav-item">
         <%= link_to "#{@user.name}'s Comments", show_reply_user_path(@user), class: "nav-link #{'active' if action?('show_reply')}" %>

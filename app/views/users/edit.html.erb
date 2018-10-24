@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="margin-top-50">
+    <%= simple_form_for @user do |f| %>
+      <%= f.input :name, label: false %>
+      <%= f.input :intro, label: false, input_html: { class: 'de-height', :rows => 6 } %>
+
+      <%= f.input :avatar, as: :file, label: "Profile Picture", label_html: { style: 'font-weight: 600;'} %>
+      <%= f.button :submit, "Update", class: 'btn btn-outline-dark' %>
+    <% end %>
+  </div>
+</div>

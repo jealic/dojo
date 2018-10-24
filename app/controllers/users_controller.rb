@@ -1,7 +1,27 @@
 class UsersController < ApplicationController
+  
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.where(draft: false).order("posts.created_at DESC")
+  end
+
+  def edit
+    @user = User.find(params[:id])
+    unless @user == current_user
+      flash[:alert] = "You have no access editing other people's profile."
+      redirect_back fallback_location: root_path
+    end    
+  end
+
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      flash[:notice] = "Updated successfully."
+      redirect_back fallback_location: root_path
+    else
+      flash.now[:alert] = @user.errors.full_messages.to_sentence if @user.errors.any?
+      render :edit
+    end
   end
 
   def show_draft
@@ -22,5 +42,9 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def user_params
+    params.require(:user).permit(:name, :intro, :avatar)
+  end
 
 end
