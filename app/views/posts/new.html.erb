@@ -3,12 +3,12 @@
     <%= simple_form_for @post do |f| %>
       <%= f.input :title, label: false, placeholder: 'Title' %>
       <%= f.input :content, label: false, as: :text, :input_html => { class: 'de-height', :rows => 12 } %>
-      <label class="btn btn-outline-dark">
-        Upload File
-        <span style="display: none;">
-          <%= f.input :image, as: :file, required: true, multiple: true, class: 'form-group' %>
-        </span>
-      </label>
+      <span>
+        <%= f.input :image, label: false, input_html: {class: 'btn btn-outline-info'} %>
+        <%= image_tag @post.image, width: '300px', class: 'img-thumbnail' if @post.image? %>
+      </span>
+      
+      
       <hr>
       
       <div class="container">

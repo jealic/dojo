@@ -3,8 +3,18 @@
     <div class="row">
       <!--USER'S SELF-INTRODUCTION -->
       <div class="col-3">
-        <%= @user.avatar %>
-        <%= @user.name %>
+        <% if @user.avatar? %>
+          <%= image_tag @user.avatar, width: '300px', class: 'img-thumbnail' %>
+        <% else %>
+          <div class="text-center">
+            <%= fa_icon 'user-circle-o 5x' %>
+          </div>
+        <% end %>
+        
+        <div class="text-center">
+          <br>
+          <h4><%= @user.name %></h4>
+        </div>
       </div>
       <div class="col-9">
         <p><%= @user.intro %></p>
@@ -23,36 +33,35 @@
 </div>
 
 
-<br><br>
+<br>
 <!-- personal articles -->
 <div class="container">
   <% if @user == current_user %>
-     <div class="">
+     <div class="text-center">
       <%= link_to 'New Post', new_post_path, class: 'btn btn-outline-dark' %>
     </div>
     <hr>
-
-    <div class="margin-top-50">
-      <ul class="nav nav-tabs weight-700">
-        <li class="nav-item">
-          <%= link_to 'My Posts', user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'My Comments', show_reply_user_path(@user), class: "nav-link #{'active' if action?('show_reply')}" %>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">My Collection</a>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'My Drafts', show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link">My Friends</a>
-        </li>
-      </ul>
-    </div>
-  <% else %>
     
+    <ul class="nav nav-tabs weight-700">
+      <li class="nav-item">
+        <%= link_to 'My Posts', user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'My Comments', show_reply_user_path(@user), class: "nav-link #{'active' if action?('show_reply')}" %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">My Collection</a>
+      </li>
+      <li class="nav-item">
+        <%= link_to 'My Drafts', show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">My Friends</a>
+      </li>
+    </ul>
+    
+  <% else %>
+    <br>
     <ul class="nav nav-tabs weight-700">
       <li class="nav-item">
         <%= link_to "#{@user.name}'s Posts", user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
@@ -62,9 +71,6 @@
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">My Collection</a>
-      </li>
-      <li class="nav-item">
-        <%= link_to "#{@user.name}'s Drafts", show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
       </li>
       <li class="nav-item">
         <a href="#" class="nav-link">My Friends</a>

@@ -7,6 +7,7 @@ class Post < ApplicationRecord
   has_many :post_categoryships # 某 post 被刪，跟這個 post 有關的 post-category 記錄也都會沒有
   has_many :categories, through: :post_categoryships
   
+  mount_uploader :image, ImageUploader
 
 
   # 文章是否為草稿

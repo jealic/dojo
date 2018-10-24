@@ -18,9 +18,9 @@ class PostsController < ApplicationController
       @post.draft = false
       @post.save
       flash[:notice] = "Successfully published."
-      redirect_to posts_path
-    elsif @post.save
       redirect_to user_path(current_user)
+    elsif @post.save
+      redirect_to show_draft_user_path(current_user)
     else
       flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
       render :new
@@ -38,6 +38,6 @@ class PostsController < ApplicationController
   private
 
   def post_params
-    params.require(:post).permit(:title, :description, :image, :draft, :privacy, :category_ids => [])
+    params.require(:post).permit(:title, :content, :image, :draft, :privacy, :category_ids => [])
   end
 end

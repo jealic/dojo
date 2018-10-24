@@ -16,6 +16,8 @@ class User < ApplicationRecord
   has_many :friender, through: :inverse_friendships, source: :user
   #friender 是加別人當朋友的人
 
+  mount_uploader :avatar, AvatarUploader
+
   def admin?
     self.role == "admin"
   end

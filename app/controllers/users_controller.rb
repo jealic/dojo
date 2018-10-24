@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.where(draft: false).order("posts.created_at DESC")
+    @posts = @user.posts.where(draft: false).page(params[:page]).per(10).order("posts.created_at DESC")
   end
 
   def edit
@@ -37,7 +37,7 @@ class UsersController < ApplicationController
 
   def show_reply
     @user = User.find(params[:id])
-    @replies = @user.replies.order("replies.created_at DESC")
+    @replies = @user.replies.order("replies.created_at DESC").page(params[:page]).per(10)
     render :show
   end
 

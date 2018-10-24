@@ -3,8 +3,16 @@
     <%= simple_form_for @user do |f| %>
       <%= f.input :name, label: false %>
       <%= f.input :intro, label: false, input_html: { class: 'de-height', :rows => 6 } %>
-
-      <%= f.input :avatar, as: :file, label: "Profile Picture", label_html: { style: 'font-weight: 600;'} %>
+      <div class="form-inline">
+        <% if @user.avatar? %>
+          <%= image_tag @user.avatar, width: '300px', class: 'img-thumbnail'%>
+          <%= f.input :avatar, label: "Re-upload your picture", label_html: { class: 'btn btn-outline-info', style: "margin: 0 20px;"}, input_html: {hidden: true} %>
+        <% else %>
+          <%= f.input :avatar, label: "Upload Picture", label_html: { class: 'btn btn-outline-info', style: "margin: 0 20px;"} %>
+        <% end %>
+      </div>
+      <div class="clearfix"></div>
+      <hr>
       <%= f.button :submit, "Update", class: 'btn btn-outline-dark' %>
     <% end %>
   </div>

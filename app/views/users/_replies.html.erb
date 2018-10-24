@@ -1,14 +1,30 @@
 <div class="bg-light-yellow">
   <% @replies.each do |reply| %>
     <div class="my-comment-div">
-      <h5><%= link_to reply.post.title, post_path(reply.post) %></h5>
-      <div class="form-inline">
-        <textarea class="form-control comment-area"><%= reply.comment %></textarea>
+      <div class="">
+        <h5 class="float-left"><%= link_to reply.post.title, post_path(reply.post) %></h5>
+        <em class="float-right"><%= reply.created_at.strftime("%Y-%m-%d %H:%M:%S") %></em>
+        <div class="clearfix"></div>
+      </div>
+      
+      <% if reply.user == current_user %>
+        <div class="form-group">
+          <textarea class="form-control comment-area"><%= reply.comment %></textarea>
+        </div>
         <div class="comment-edit">
           <%= fa_icon 'edit', style: 'font-size: 25px;' %> 
           <%= fa_icon 'times', style: 'border: 2px solid #000; border-radius: 3px; padding: 2px 4px;' %>  
-        </div> 
-      </div>  
+        </div>
+        <div class="clearfix"></div>
+        
+      <% else %>
+        <div class="user-comment-area">
+          <%= reply.comment %>
+        </div>
+      <% end %>
+      
     </div>
   <% end %>
 </div>
+<br>
+<%= paginate @replies %>
