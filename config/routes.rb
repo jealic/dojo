@@ -13,5 +13,10 @@ Rails.application.routes.draw do
     resources :users
   end
 
-  resources :users
+  resources :users do
+    member do
+      get :show_reply
+      get :show_draft
+    end
+  end
 end

@@ -1,1 +1,90 @@
-<h1>從 draft 那邊連過來，兩種 submit 連不同 page</h1>
+<div class="user-info">
+  <div class="container">
+    <div class="row">
+      <!--USER'S SELF-INTRODUCTION -->
+      <div class="col-3">
+        <%= @user.avatar %>
+        <%= @user.name %>
+      </div>
+      <div class="col-9">
+        <p><%= @user.intro %></p>
+        <% if @user == current_user %>
+          <%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-outline-dark' %>
+        <% else %>
+          <%= link_to class: 'btn btn-outline-dark' do %>
+            <%= fa_icon 'plus' %>
+            <span>Friend</span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+<br><br>
+<!-- personal articles -->
+<div class="container">
+  <% if @user == current_user %>
+     <div class="">
+      <%= link_to 'New Post', new_post_path, class: 'btn btn-outline-dark' %>
+    </div>
+    <hr>
+
+    <div class="margin-top-50">
+      <ul class="nav nav-tabs weight-700">
+        <li class="nav-item">
+          <%= link_to 'My Post', user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'My Comments', show_reply_user_path(@user), class: "nav-link #{'active' if action?('show_reply')}" %>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">My Collection</a>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'My Drafts', show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">My Friends</a>
+        </li>
+      </ul>
+    </div>
+  <% else %>
+    
+    <ul class="nav nav-tabs weight-700">
+      <li class="nav-item">
+        <%= link_to "#{@user.name}'s Post", user_path(@user), class: "nav-link #{'active' if action?('show')}" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "#{@user.name}'s Comments", show_reply_user_path(@user), class: "nav-link #{'active' if action?('show_reply')}" %>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">My Collection</a>
+      </li>
+      <li class="nav-item">
+        <%= link_to "#{@user.name}'s Drafts", show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">My Friends</a>
+      </li>
+    </ul>
+
+  <% end %>
+
+  
+  <div class="row">
+    <div class="col">
+      <% if action?('show_draft') %>
+        <%= render partial: 'drafts' %>
+      <% elsif action?('show_reply') %>
+        <%= render partial: 'replies' %>
+      <% else %>
+        <%= render partial: 'posts' %>
+      <% end %>
+    </div>
+  </div>
+
+</div>
+

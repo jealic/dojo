@@ -1,3 +1,53 @@
 // Place all the styles related to the posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/******* Post Index ********/
+
+.thin-font th {
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.category-tag {
+  margin: 10px 5px;
+  background-color: #fff;
+  border: 1px solid #17a2b8;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 2px 18px 3px;
+  transition: box-shadow .3s;
+}
+
+.category-tag:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}
+
+.page-link {
+  color: #18a2b8;
+  border: 1px solid #18a2b8;
+}
+
+.page-item.active .page-link {
+  color: #fff;
+  background-color: #18a2b8;
+  border-color: #18a2b8;
+}
+
+.page-item.disabled .page-link {
+  border-color: #18a2b8;
+}
+
+.page-item:hover .page-link {
+  border-color: #17d0ea;
+  background-color: #17d0ea;
+  color: #fff; 
+}
+
+/******* Post Show *******/
+
+.post-show-title {
+  background-color: #17a2b85e;
+  padding: 12px 0 6px;
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+}

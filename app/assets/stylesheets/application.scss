@@ -1,6 +1,8 @@
 @import 'bootstrap';
 @import 'font-awesome';
 @import 'style';
+@import 'users';
+@import 'posts';
 
 
 .clearfix {
@@ -33,4 +35,8 @@
 
 .weight-700 {
   font-weight: 700;
+}
+
+.alert {
+  margin-bottom: 0;
 }

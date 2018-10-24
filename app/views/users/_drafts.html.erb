@@ -1,0 +1,13 @@
+<table class="table">
+  <% @drafts.each do |draft| %>
+  <tr class="bg-light-yellow">
+    <th><%= link_to draft.title, post_path(draft) %></th>
+    <td>draft</td>
+    <td><%= draft.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+    <td>
+      <%= fa_icon 'edit', style: 'font-size: 25px;' %> 
+      <%= fa_icon 'times', style: 'border: 2px solid #000; border-radius: 3px; padding: 2px 4px;' %>    
+    </td>
+  </tr>
+  <% end %>
+</table>
