@@ -29,7 +29,9 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
-    @reply = Reply.new
+    if @post.draft == false
+      @reply = Reply.new
+    end
     @replies = @post.replies.all
     # count views
     @post.count_views

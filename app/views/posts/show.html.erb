@@ -81,9 +81,11 @@
 <% end %>
 
 <!-- comment textarea -->
-<div class="py-4 px-5">
-  <%= simple_form_for [@post, @reply] do |f| %>
-    <%= f.input :comment, input_html: {rows: 10, style: "border-radius: 15px;"}, placeholder: "Leave comment:", label: false %>
-    <%= f.submit "Submit", class: 'btn btn-outline-info' %>
-  <% end %>
-</div>
+<% if @post.draft == false %>
+  <div class="py-4 px-5">
+    <%= simple_form_for [@post, @reply] do |f| %>
+      <%= f.input :comment, input_html: {rows: 10, style: "border-radius: 15px;"}, placeholder: "Leave comment:", label: false %>
+      <%= f.submit "Submit", class: 'btn btn-outline-info' %>
+    <% end %>
+  </div>
+<% end %>
