@@ -49,3 +49,14 @@
   display: inline-block;
   width: 150px;
 }
+
+.index-badge {
+  background-color: #e7ecef;
+  color: #81888e;
+}
+
+.index-badge[href]:hover, {
+  background-color: #a9b8c7;
+  color: #fff;
+  text-decoration: none;
+}

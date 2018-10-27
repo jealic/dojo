@@ -30,6 +30,12 @@
     <% end %>
     
     <p style="font-size: 20px;"><%= @post.content %></p>
+    <div class="">
+      <i style="color: #839cbb;">related tags: </i>
+      <% @post.categories.each do |category| %>
+        <%= link_to category.name, root_path, class: "badge badge-warning mr-2", style: 'font-size: 18px;' %>
+      <% end %>
+    </div>
     <% if @post.user == current_user %>
       <div class="comment-edit">
         <%= link_to edit_post_path(@post) do %>
