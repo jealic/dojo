@@ -3,7 +3,7 @@
     <h4 class="weight-700"><%= @post.title %></h4>
   </div>
 </div>
-
+<!-- post article -->
 <div class="row post-show-row">
   <div class="col-3">
     <div class="text-center py-5">
@@ -42,6 +42,7 @@
 
 </div>
 
+<!-- post's replies -->
 <% if @post.replies %>
   <% @replies.each do |reply| %>
     <div class="row post-show-reply-row bg-light-yellow">
@@ -78,3 +79,11 @@
     </div>
   <% end %>
 <% end %>
+
+<!-- comment textarea -->
+<div class="py-4 px-5">
+  <%= simple_form_for [@post, @reply] do |f| %>
+    <%= f.input :comment, input_html: {rows: 10, style: "border-radius: 15px;"}, placeholder: "Leave comment:", label: false %>
+    <%= f.submit "Submit", class: 'btn btn-outline-info' %>
+  <% end %>
+</div>
