@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
 
   def index
-    @posts = Post.where(draft: false).page(params[:page]).per(10)
+    @posts = Post.where(draft: false).page(params[:page]).per(20)
     @categories = Category.all
   end
 
@@ -32,7 +32,7 @@ class PostsController < ApplicationController
     if @post.draft == false
       @reply = Reply.new
     end
-    @replies = @post.replies.all
+    @replies = @post.replies.page(params[:page]).per(20)
     # count views
     @post.count_views
   end
@@ -62,6 +62,16 @@ class PostsController < ApplicationController
       flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
       render :edit
     end
+  end
+
+  def feeds
+    @posts = Post.where(draft: false)
+    @users = User.all
+    @categories = Category.all
+    @replies = Reply.all
+
+    @popular_posts = @posts.order("posts.replies_count DESC").limit(10)
+    @popular_users = @users.order("users.replies_count DESC").limit(10)
   end
   
   private

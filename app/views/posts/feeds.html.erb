@@ -1,0 +1,68 @@
+<div class="user-info">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-9 row text-center">
+        <div class="col-4">
+          <h4>Users</h4>
+          <button class="feeds-btn">
+            <%= @users.count %>
+          </button>
+        </div>
+
+        <div class="col-4">
+          <h4>Posts</h4>
+          <button class="feeds-btn">
+            <%= @posts.count %>
+          </button>
+        </div>
+
+        <div class="col-4">
+          <h4>Comments</h4>
+          <button class="feeds-btn">
+            <%= @replies.count %>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="margin-top-50">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-9 row text-center">
+        <div class="col-5 pr-4">
+          <div class="feeds-box-title">
+            <h3>Chatterbox</h3>
+          </div>
+          <table class="table table-borderless">
+            <% @popular_users.each do |user| %>
+              <tr style="text-align: left;">
+                <td>
+                  <b><%= link_to user.name, user_path(user), style: "color: #3a72b3;" %></b>
+                </td>
+                <td style="color: #4d9bff;"><%= user.replies_count %> replies</td>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+        <div class="col-7 pl-4">
+          <div class="feeds-box-title">
+            <h3>Most Popular Posts</h3>
+          </div>
+          <table class="table table-borderless">
+            <% @popular_posts.each do |post| %>
+            <tr style = "text-align: left;">
+              <td>
+                <b><%= link_to post.title, post_path(post), style: "color: #3a72b3;" %></b>
+              </td>
+              <td style="color: #4d9bff;"><%= post.created_at.strftime("%Y-%m-%d") %></td>
+            </tr>
+            <% end %>
+          </table>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

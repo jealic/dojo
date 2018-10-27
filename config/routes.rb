@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   root 'posts#index'
   resources :posts do
     resources :replies
+    collection do
+      get :feeds
+    end
   end
 
   namespace :admin do
