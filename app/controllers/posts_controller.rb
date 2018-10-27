@@ -34,6 +34,33 @@ class PostsController < ApplicationController
     # count views
     @post.count_views
   end
+
+  def edit
+    @post = Post.find(params[:id])
+    if @post.user = current_user
+      @categories = Category.all
+    else
+      flash[:alert] = 'You have no access!'
+      redirect_back fallback_location: root_path
+    end
+  end
+
+  def update
+    @post = Post.find(params[:id])
+    if @post.update(post_params)
+      if @post.draft == true && params[:commit] == 'Publish'
+        @post.draft = false
+        @post.save
+        flash[:notice] = "\"#{@post.title}\" is successfully published."
+      else
+        flash[:notice] = "\"#{@post.title}\" has been updated."
+      end
+      redirect_to post_path(@post)
+    else
+      flash[:alert] = @post.errors.full_messages.to_sentence if @post.errors.any?
+      render :edit
+    end
+  end
   
   private
 
