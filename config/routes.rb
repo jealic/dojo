@@ -8,6 +8,10 @@ Rails.application.routes.draw do
     collection do
       get :feeds
     end
+    member do
+      post :collect
+      post :uncollect
+    end
   end
 
   namespace :admin do
