@@ -25,6 +25,7 @@ Rails.application.routes.draw do
     member do
       get :show_reply
       get :show_draft
+      get :show_collect
     end
   end
 end

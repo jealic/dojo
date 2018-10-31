@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   def show_draft
     @user = User.find(params[:id])
     if @user == current_user
-      @drafts = @user.posts.where(draft: true).order("posts.created_at DESC")
+      @drafts = @user.posts.where(draft: true).order("posts.created_at DESC").page(params[:page]).per(10)
       render :show
     else
       flash[:alert] = "You have no access to other people's drafts."
@@ -39,6 +39,17 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @replies = @user.replies.order("replies.created_at DESC").page(params[:page]).per(10)
     render :show
+  end
+
+  def show_collect
+    @user = User.find(params[:id])
+    if @user == current_user
+      @collects = @user.collected_posts.order("collects.created_at DESC").page(params[:page]).per(10)
+      render :show    
+    else
+      @collects = @user.collected_posts.order("collects.created_at DESC").page(params[:page]).per(10)
+      render :show
+    end
   end
 
   private

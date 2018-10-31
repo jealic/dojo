@@ -1,0 +1,27 @@
+<table class="table">
+  <% if @collects.count == 0 %>
+    <tr class= "bg-light-yellow">
+      <th>Haven't collected any posts yet.<th>
+    </tr>
+  <% else %>
+    <% @collects.each do |post| %>
+    <tr class="bg-light-yellow" id="uncollectBar-<%= post.id %>">
+      <th><%= link_to post.title, post_path(post) %></th>
+      <% if @user == current_user %>
+        <td>
+          <%= link_to uncollect_post_path(post), method: :post, remote: true, class: 'btn btn-light btn-sm' do %>
+            <span class="fa-stacked">
+              <i class="fa fa-heart"></i>
+              <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
+            </span>
+            Uncollect
+          <% end %>
+        </td>  
+      <% end %>
+      
+    </tr>
+    <% end %>
+    <%= paginate @collects %>
+  <% end %>
+  
+</table>
