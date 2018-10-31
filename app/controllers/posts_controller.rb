@@ -91,6 +91,17 @@ class PostsController < ApplicationController
       format.js
     end
   end
+
+  def destroy
+    @post = Post.find(params[:id])
+    if @post.user == current_user
+      @post.destroy
+      flash[:notice] = "Successfully deleted post #{@post.title}."
+    else
+      flash[:alert] = "Have no authority to deleting action!"
+    end
+    redirect_back fallback_location: root_path
+  end
   
   private
 

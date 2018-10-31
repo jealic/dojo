@@ -14,7 +14,9 @@
         <%= link_to edit_post_path(post) do %>
           <%= fa_icon 'edit', style: 'font-size: 27px;' %>
         <% end %>
-        <%= fa_icon 'times', style: 'border: 2px solid #000; border-radius: 3px; padding: 2px 4px;' %>
+        <%= link_to post_path(post), method: :delete, data: {confirm: "Are you sure?"} do %>
+          <%= fa_icon 'times', style: 'border: 2px solid #007bff; border-radius: 3px; padding: 2px 4px;' %>
+        <% end %>
       </td>
       <% end %>
     </tr>
