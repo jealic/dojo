@@ -1,0 +1,14 @@
+<% if @post.is_collected?(current_user) %>
+  <%= link_to uncollect_post_path(@post), method: :post, remote: true, class: 'btn btn-light' do %>
+    <span class="fa-stacked">
+      <i class="fa fa-heart"></i>
+      <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
+    </span>
+    Uncollect
+  <% end %>
+<% else %>
+  <%= link_to collect_post_path(@post), method: :post, remote: true, class: 'btn btn-dark' do %>
+    <%= fa_icon 'heart' %>
+    Collect
+  <% end %>
+<% end %>
