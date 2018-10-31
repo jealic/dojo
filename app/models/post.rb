@@ -21,6 +21,10 @@ class Post < ApplicationRecord
     where(draft: false)
   }
 
+  def is_collected?(user)
+    self.collectors.include?(user)    
+  end
+
   # 計算 viewed_count
   def count_views
     self.viewed_count += 1
