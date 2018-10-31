@@ -1,16 +1,22 @@
 <table class="table">
-  <% @drafts.each do |draft| %>
-  <tr class="bg-light-yellow">
-    <th><%= link_to draft.title, post_path(draft) %></th>
-    <td>draft</td>
-    <td><%= draft.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-    <td>
-      <%= link_to edit_post_path(draft) do %>
-        <%= fa_icon 'edit', style: 'font-size: 27px;' %>
-      <% end %>
-      <%= fa_icon 'times', style: 'border: 2px solid #000; border-radius: 3px; padding: 2px 4px;' %>    
-    </td>
-  </tr>
+  <% if @drafts.count == 0 %>
+    <tr class= "bg-light-yellow">
+      <th>Have no drafts at present.<th>
+    </tr>
+  <% else %>
+    <% @drafts.each do |draft| %>
+    <tr class="bg-light-yellow">
+      <th><%= link_to draft.title, post_path(draft) %></th>
+      <td>draft</td>
+      <td><%= draft.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <td>
+        <%= link_to edit_post_path(draft) do %>
+          <%= fa_icon 'edit', style: 'font-size: 27px;' %>
+        <% end %>
+        <%= fa_icon 'times', style: 'border: 2px solid #000; border-radius: 3px; padding: 2px 4px;' %>    
+      </td>
+    </tr>
+    <% end %>
+    <%= paginate @drafts %>
   <% end %>
-  <%= paginate @drafts %>
 </table>

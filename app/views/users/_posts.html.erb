@@ -1,18 +1,24 @@
 <table class="table">
-  <% @posts.each do |post| %>
-  <tr class="bg-light-yellow">
-    <th><%= link_to post.title, post_path(post) %></th>
-    <td>published</td>
-    <td><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
-    <% if post.user == current_user %>
-    <td>
-      <%= link_to edit_post_path(post) do %>
-        <%= fa_icon 'edit', style: 'font-size: 27px;' %>
+  <% if @posts.count == 0 %>
+    <tr class= "bg-light-yellow">
+      <th>Have no posts yet.<th>
+    </tr>
+  <% else %>
+    <% @posts.each do |post| %>
+    <tr class="bg-light-yellow">
+      <th><%= link_to post.title, post_path(post) %></th>
+      <td>published</td>
+      <td><%= post.created_at.strftime("%Y-%m-%d %H:%M:%S") %></td>
+      <% if post.user == current_user %>
+      <td>
+        <%= link_to edit_post_path(post) do %>
+          <%= fa_icon 'edit', style: 'font-size: 27px;' %>
+        <% end %>
+        <%= fa_icon 'times', style: 'border: 2px solid #000; border-radius: 3px; padding: 2px 4px;' %>
+      </td>
       <% end %>
-      <%= fa_icon 'times', style: 'border: 2px solid #000; border-radius: 3px; padding: 2px 4px;' %>
-    </td>
+    </tr>
     <% end %>
-  </tr>
   <% end %>
 </table>
 <br>
