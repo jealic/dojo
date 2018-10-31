@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   skip_before_action :authenticate_user!, only: [:index]
+  before_action :set_post, only: [:show, :edit, :update, :collect, :uncollect, :destroy]
 
   def index
     @posts = Post.where(draft: false).page(params[:page]).per(20)
@@ -28,7 +29,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    
     if @post.draft == false
       @reply = Reply.new
     end
@@ -38,7 +39,7 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = Post.find(params[:id])
+    
     if @post.user = current_user
       @categories = Category.all
     else
@@ -48,7 +49,7 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post = Post.find(params[:id])
+    
     if @post.update(post_params)
       if @post.draft == true && params[:commit] == 'Publish'
         @post.draft = false
@@ -75,13 +76,13 @@ class PostsController < ApplicationController
   end
 
   def collect
-    @post = Post.find(params[:id])
+    
     @post.collects.create!(user: current_user)
     # redirect_back fallback_location: root_path
   end
 
   def uncollect
-    @post = Post.find(params[:id])
+    
     collects = Collect.where(post: @post, user: current_user)
     collects.destroy_all
     # redirect_back fallback_location: root_path
@@ -93,12 +94,12 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
+    
     if @post.user = current_user
       @post.destroy
       flash[:notice] = "Successfully deleted post \"#{@post.title}\"."
     else
-      flash[:alert] = "Have no authority to deleting action!"
+      flash[:alert] = "Have no authority to this deleting action!"
     end
     redirect_back fallback_location: root_path
   end
@@ -107,5 +108,9 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :content, :image, :draft, :privacy, :category_ids => [])
+  end
+
+  def set_post
+    @post = Post.find(params[:id])
   end
 end

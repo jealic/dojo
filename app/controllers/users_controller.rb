@@ -38,6 +38,7 @@ class UsersController < ApplicationController
   def show_reply
     @user = User.find(params[:id])
     @replies = @user.replies.order("replies.created_at DESC").page(params[:page]).per(10)
+
     render :show
   end
 

@@ -1,0 +1,9 @@
+<div class="container">
+  <div class="margin-top-50">
+    <%= simple_form_for [@post, @reply] do |f| %>
+      <%= f.input :comment, label: "Edit Your Comment:", input_html: { rows: 5} %>
+      <%= f.submit %>
+
+    <% end %>
+  </div>
+</div>
