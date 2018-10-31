@@ -1,7 +1,12 @@
 <div class="post-show-title">
   <div class="container">
-    <h4 class="weight-700"><%= @post.title %></h4>
+    <span class="weight-700 font-26"><%= @post.title %></span>
+    <div class="collect-btn float-right">
+      <%= link_to 'Uncollect', uncollect_post_path(@post), method: :post, class: 'btn btn-light' %>
+      <%= link_to 'Collect', collect_post_path(@post), method: :post, class: 'btn btn-dark' %>
+    </div>
   </div>
+  <div class="clearfix"></div>
 </div>
 <!-- post article -->
 <div class="row post-show-row">

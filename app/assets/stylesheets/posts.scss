@@ -48,7 +48,7 @@
 
 .post-show-title {
   background-color: #17a2b85e;
-  padding: 12px 0 6px;
+  padding: 15px 0 12px;
   box-shadow: 0 0 11px rgba(33,33,33,.2);
 }
 
@@ -64,4 +64,8 @@
 .post-show-box {
   border-left: 1px solid gray;
   padding-bottom: 20px;
+}
+
+.collect-btn {
+  vertical-align: middle;
 }

@@ -73,6 +73,19 @@ class PostsController < ApplicationController
     @popular_posts = @posts.order("posts.replies_count DESC").limit(10)
     @popular_users = @users.order("users.replies_count DESC").limit(10)
   end
+
+  def collect
+    @post = Post.find(params[:id])
+    @post.collects.create!(user: current_user)
+    redirect_back fallback_location: root_path
+  end
+
+  def uncollect
+    @post = Post.find(params[:id])
+    collects = Collect.where(post: @post, user: current_user)
+    collects.destroy_all
+    redirect_back fallback_location: root_path
+  end
   
   private
 
