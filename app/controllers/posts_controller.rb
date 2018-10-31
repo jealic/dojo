@@ -94,9 +94,9 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
-    if @post.user == current_user
+    if @post.user = current_user
       @post.destroy
-      flash[:notice] = "Successfully deleted post #{@post.title}."
+      flash[:notice] = "Successfully deleted post \"#{@post.title}\"."
     else
       flash[:alert] = "Have no authority to deleting action!"
     end
