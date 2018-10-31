@@ -85,6 +85,11 @@ class PostsController < ApplicationController
     collects = Collect.where(post: @post, user: current_user)
     collects.destroy_all
     # redirect_back fallback_location: root_path
+
+    respond_to do |format|
+      format.html { redirect_back fallback_location: root_path }
+      format.js
+    end
   end
   
   private

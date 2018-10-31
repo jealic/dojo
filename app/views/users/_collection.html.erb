@@ -9,7 +9,7 @@
       <th><%= link_to post.title, post_path(post) %></th>
       <% if @user == current_user %>
         <td>
-          <%= link_to uncollect_post_path(post), method: :post, remote: true, class: 'btn btn-light btn-sm' do %>
+          <%= link_to uncollect_post_path(post), method: :post, class: 'btn btn-light btn-sm' do %>
             <span class="fa-stacked">
               <i class="fa fa-heart"></i>
               <i class="fa fa-bolt fa-stack-1x fa-inverse"></i>
