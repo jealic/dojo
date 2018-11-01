@@ -13,8 +13,8 @@
     <table class="table">
       <thead class="thead-light thin-font">
         <tr>
-          <th class="text-center">Replies Count</th>
-          <th>Title</th>
+          <th class="text-center"><%= sort_link(@q, :replies_count, 'Replies Count', default_order: :desc) %></th>
+          <th><%= sort_link(@q, :title, 'Title', default_order: :desc) %></th>
           <th class="text-center">Last Replied at</th>
           <th class="text-center">Viewed Count</th>
         </tr>
