@@ -34,7 +34,7 @@ class PostsController < ApplicationController
     if @post.draft == false
       @reply = Reply.new
     end
-    @replies = @post.replies.page(params[:page]).per(20)
+    @replies = @post.replies.order("updated_at DESC").page(params[:page]).per(20)
     # count views
     @post.count_views
   end
