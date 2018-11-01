@@ -11,12 +11,12 @@
 
   <div class="">
     <table class="table">
-      <thead class="thead-light thin-font">
+      <thead class="thead-light thead-font">
         <tr>
           <th class="text-center"><%= sort_link(@q, :replies_count, 'Replies Count', default_order: :desc) %></th>
           <th><%= sort_link(@q, :title, 'Title', default_order: :desc) %></th>
-          <th class="text-center">Last Replied at</th>
-          <th class="text-center">Viewed Count</th>
+          <th class="text-center"><%= sort_link(@q, :last_replied_at, 'Last Replied at', default_order: :desc) %></th>
+          <th class="text-center"><%= sort_link(@q, :viewed_count, 'Viewed Count', default_order: :desc) %></th>
         </tr>
       </thead>
       
@@ -33,8 +33,8 @@
             </td>
             <!-- 印出本 post 最後的 reply 的 建立時間 -->
             <td class="text-center">
-              <% if p.replies.present? %>
-                <%= p.replies.last.created_at.strftime("%Y-%m-%d %H:%M:%S") %>
+              <% if p.last_replied_at.present? %>
+                <%= p.last_replied_at.strftime("%Y-%m-%d %H:%M:%S") %>
               <% else %>
                 <span style="color: gray;">No replies yet</span>
               <% end %>                
