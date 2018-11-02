@@ -21,6 +21,8 @@ Rails.application.routes.draw do
     resources :users
   end
 
+  resources :categories, only: :show
+
   resources :users do
     member do
       get :show_reply
