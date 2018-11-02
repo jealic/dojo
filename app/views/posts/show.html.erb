@@ -102,8 +102,8 @@
 <% if @post.draft == false %>
   <div class="py-4 px-5">
     <%= simple_form_for [@post, @reply] do |f| %>
-      <%= f.input :comment, input_html: {rows: 10, style: "border-radius: 15px; padding: 20px 40px;"}, placeholder: "Leave comment:", label: false %>
-      <%= f.submit "Submit", class: 'btn btn-outline-info float-right' %>
+      <%= f.input :comment, input_html: {rows: 5, style: "border-radius: 15px; padding: 20px 40px;"}, placeholder: "Leave comment:", label: false %>
+      <%= f.submit "Submit", class: 'btn btn-outline-success float-right' %>
     <% end %>
     <div class="clearfix"></div>
   </div>

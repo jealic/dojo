@@ -1,9 +1,12 @@
 <div class="container">
   <div class="margin-top-50">
     <%= simple_form_for [@post, @reply] do |f| %>
-      <%= f.input :comment, label: "Edit Your Comment:", input_html: { rows: 5} %>
-      <%= f.submit %>
-
+      <%= f.input :comment, input_html: {rows: 5, style: "border-radius: 15px; padding: 20px 40px;"}, placeholder: "Leave comment:", label: "Edit Comment:" %>
+      <div class="float-right">
+        <%= link_to "Cancel", :back, class: 'btn btn-outline-secondary mr-2' %>
+        <%= f.submit "Update", class: 'btn btn-outline-success' %>
+      </div>
     <% end %>
+    <div class="clearfix"></div>
   </div>
 </div>
