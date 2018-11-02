@@ -4,6 +4,8 @@ class Reply < ApplicationRecord
 
   after_save :match_post_last_replied_at
 
+  validates_presence_of :comment
+
   def match_post_last_replied_at
     self.post.update(last_replied_at: self.updated_at)
   end

@@ -10,6 +10,7 @@ class Post < ApplicationRecord
   has_many :categories, through: :post_categoryships
   
   mount_uploader :image, ImageUploader
+  validates_presence_of [:content, :title]
 
 
   # 文章是否為草稿
