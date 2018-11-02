@@ -1,0 +1,34 @@
+<table class="table container">
+  <thead class="thead-light thead-font w-100">
+    <tr class="row">
+      <th class="col-2 text-center"><%= sort_link(@q, :replies_count, 'Replies Count', default_order: :desc) %></th>
+      <th class="caret-gone col-6"><%= fa_icon 'sort', style: 'color: #6c757d;' %> <%= sort_link(@q, :title, 'Title', default_order: :desc) %></th>
+      <th class="col-2 text-center"><%= sort_link(@q, :last_replied_at, 'Last Replied at', default_order: :desc) %></th>
+      <th class="col-2 text-center"><%= sort_link(@q, :viewed_count, 'Viewed Count', default_order: :desc) %></th>
+    </tr>
+  </thead>
+  
+  <tbody class="w-100">
+    <% @posts.each do |p| %>
+      <tr class="row">
+
+        <td class="col-2 text-center"><%= p.replies_count %></td>
+        <td class="col-6">
+          <b><%= link_to p.title, post_path(p) %></b>
+          <% p.categories.each do |category| %>
+            <%= link_to category.name, category_path(category), class: "badge index-badge" %>
+          <% end %>
+        </td>
+        <!-- 印出本 post 最後的 reply 的 建立時間 -->
+        <td class="col-2 text-center">
+          <% if p.last_replied_at.present? %>
+            <%= p.last_replied_at.strftime("%Y-%m-%d %H:%M:%S") %>
+          <% else %>
+            <span style="color: gray;">No replies yet</span>
+          <% end %>                
+        </td>
+        <td class="col-2 text-center"><%= fa_icon 'eye' %> <%= p.viewed_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

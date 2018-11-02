@@ -1,3 +1,28 @@
 // Place all the styles related to the categories controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+/***** CATEGORY TAGS ******/
+
+.category-tag {
+  margin: 10px 5px;
+  background-color: #fff;
+  border: 1px solid #17a2b8;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 2px 18px 3px;
+  transition: box-shadow .3s;
+  color: #545b62;
+}
+
+.category-tag:hover {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  color: #17a2b8;
+  font-weight: 600;
+}
+
+.category-tag.active {
+  box-shadow: 0 0 11px rgba(33,33,33,.2);
+  color: #17a2b8;
+  font-weight: 600;
+}

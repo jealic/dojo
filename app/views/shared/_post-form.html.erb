@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="margin-top-50">
+    <%= simple_form_for @post do |f| %>
+      <%= f.input :title, label: false, placeholder: 'Title' %>
+      <%= f.input :content, label: false, as: :text, :input_html => { class: 'de-height', :rows => 12 } %>
+      <div>
+        <%= image_tag @post.image, width: '300px', class: 'img-thumbnail mb-3' if @post.image? %>
+      </div>
+      <div>
+        <%= f.input :image, label: false, input_html: {class: 'btn btn-outline-info'} %>
+      </div>
+
+      <hr>
+      
+      <div class="container">
+        <div class="row">
+          <div class="col-8">
+            <%= f.input :privacy, as: :radio_buttons, collection: [['All', '1'], ['Only Friends', '2'], ['Only Me', '3']], label_method: :first, value_method: :first, checked: ['All', '1'], wrapper: :vertical_collection_inline %>
+            <%= f.association :categories, label: false, as: :check_boxes, collection: @categories, input_html: {multiple: true}, wrapper: :vertical_collection_inline %>
+          </div>
+          <div class="col-4">
+            <div class="float-right">
+              <h5>Status:</h5>
+              <%= f.button :submit, 'Save as Draft', class: 'btn btn-outline-dark', name: 'commit' if @post.draft == true %>
+              <%= f.button :submit, 'Publish', name: 'commit', class: 'btn btn-outline-info' %>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+          <hr>
+          <%= link_to 'Back', :back, class: 'btn' %>
+        </div>  
+      </div>
+      
+    <% end %>
+  </div>
+</div>

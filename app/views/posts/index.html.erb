@@ -3,48 +3,17 @@
     <h1 class="page-title-h1"><%= link_to 'World Wild', root_path, style: 'color: #000; text-decoration: none;' %></h1>  
   </div>
   <div style="margin-top: 30px;">
-    <% @categories.each do |c| %>  
-      <span><button class="category-tag"><%= c.name %></button></span>  
-    <% end %>
+    <ul class="nav nav-pills">
+      <li role="presentation"><%= link_to "All", root_path, class: "btn category-tag #{'active' if @category.blank? } mr-3" %></li>
+      <% @categories.each do |category| %>
+        <li role="presentation">
+          <%= link_to category.name, category_path(category), class: "btn category-tag mr-3 #{'active' if category == @category}" %>
+        </li>
+      <% end %>
+    </ul>
   </div>
   <br>
-
-  <div class="">
-    <table class="table container">
-      <thead class="thead-light thead-font w-100">
-        <tr class="row">
-          <th class="col-2 text-center"><%= sort_link(@q, :replies_count, 'Replies Count', default_order: :desc) %></th>
-          <th class="caret-gone col-6"><%= fa_icon 'sort', style: 'color: #6c757d;' %> <%= sort_link(@q, :title, 'Title', default_order: :desc) %></th>
-          <th class="col-2 text-center"><%= sort_link(@q, :last_replied_at, 'Last Replied at', default_order: :desc) %></th>
-          <th class="col-2 text-center"><%= sort_link(@q, :viewed_count, 'Viewed Count', default_order: :desc) %></th>
-        </tr>
-      </thead>
-      
-      <tbody class="w-100">
-        <% @posts.each do |p| %>
-          <tr class="row">
-
-            <td class="col-2 text-center"><%= p.replies_count %></td>
-            <td class="col-6">
-              <b><%= link_to p.title, post_path(p) %></b>
-              <% p.categories.each do |category| %>
-                <%= link_to category.name, root_path, class: "badge index-badge" %>
-              <% end %>
-            </td>
-            <!-- 印出本 post 最後的 reply 的 建立時間 -->
-            <td class="col-2 text-center">
-              <% if p.last_replied_at.present? %>
-                <%= p.last_replied_at.strftime("%Y-%m-%d %H:%M:%S") %>
-              <% else %>
-                <span style="color: gray;">No replies yet</span>
-              <% end %>                
-            </td>
-            <td class="col-2 text-center"><%= fa_icon 'eye' %> <%= p.viewed_count %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
+  <%= render partial: 'shared/post-table' %>
   <br>
   <%= paginate @posts %>     
 </div>

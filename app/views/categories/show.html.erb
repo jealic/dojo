@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="margin-top-50">
+    <h1 class="page-title-h1"><%= link_to 'World Wild', root_path, style: 'color: #000; text-decoration: none;' %></h1>  
+  </div>
+  <div style="margin-top: 30px;">
+    <ul class="nav nav-pills">
+      <li role="presentation"><%= link_to "All", root_path, class: 'btn category-tag mr-3' %></li>
+      <% @categories.each do |c| %>
+        <li role="presentation">
+          <%= link_to c.name, category_path(c), class: "btn category-tag mr-3 #{'active' if c == @category}" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <br>
+  <%= render partial: 'shared/post-table' %>
+  <br>
+  <%= paginate @posts %>     
+</div>
