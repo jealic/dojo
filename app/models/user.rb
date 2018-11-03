@@ -21,4 +21,13 @@ class User < ApplicationRecord
   def admin?
     self.role == "admin"
   end
+
+  def friend_state(user)
+    friendship = self.friendships.find_by(friend_id: user)
+    # self 是 current_user，找出 friend 是 btn 指向的那個人
+    # 檢查 invite column 是 pending/ accpet/ ignore 哪個。
+    # A→B: + pending，A 送出邀請／+ accept，A 接受邀請／+ ignore，A 拒色邀請
+    friendship.invite if friendship.present?
+    # 資料有在 friendship table 上的話，就輸出 invite column 的 string 值。
+  end
 end
