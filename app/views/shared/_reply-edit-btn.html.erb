@@ -1,0 +1,8 @@
+<div class="comment-edit">
+  <%= link_to edit_post_reply_path(reply.post, reply) do %>
+    <%= fa_icon 'edit', style: 'font-size: 27px;' %>
+  <% end %>
+  <%= link_to post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure?"} do %>
+    <%= fa_icon 'times', style: 'border: 2px solid #007bff; border-radius: 3px; padding: 2px 4px;' %>  
+  <% end %>    
+</div>

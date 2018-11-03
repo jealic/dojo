@@ -12,9 +12,9 @@ module ApplicationHelper
     elsif current_user.friend_state(user).blank?
       button_to '+ Friend', invite_friend_user_path(user), class: "btn btn-outline-success friend-btn"
     elsif current_user.friend_state(user) == 'accept' # 沒有做刪除 friend 的選項
-      content_tag(:span, 'Friend', class: 'btn btn-success friend-btn')
+      content_tag(:span, 'Friend', class: 'btn btn-info friend-btn mb-3 disabled')
     else
-      content_tag(:span, 'Waiting...', class: 'btn btn-outline-secondary friend-btn disabled')
+      content_tag(:span, 'Waiting...', class: 'btn btn-outline-secondary friend-btn disabled mb-3')
     end
   end
 end
