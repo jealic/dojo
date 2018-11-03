@@ -10,11 +10,11 @@ module ApplicationHelper
     if user == current_user
       content_tag(:span, 'Me', class: 'badge badge-info')
     elsif current_user.friend_state(user).blank?
-      button_to '+ Friend', invite_friend_user_path(user), class: "btn btn-outline-success"
+      button_to '+ Friend', invite_friend_user_path(user), class: "btn btn-outline-success friend-btn"
     elsif current_user.friend_state(user) == 'accept' # 沒有做刪除 friend 的選項
-      content_tag(:span, 'Friend', class: 'btn btn-success')
+      content_tag(:span, 'Friend', class: 'btn btn-success friend-btn')
     else
-      content_tag(:span, 'Waiting...', class: 'btn btn-outline-secondary disabled')
+      content_tag(:span, 'Waiting...', class: 'btn btn-outline-secondary friend-btn disabled')
     end
   end
 end
