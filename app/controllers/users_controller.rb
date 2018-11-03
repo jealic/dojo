@@ -98,7 +98,18 @@ class UsersController < ApplicationController
   end
 
   def show_friend
-    
+    if @user == current_user
+      @waiting_ones = current_user.friends.where.not('friendships.invite = ?', 'accept')
+      # 我邀請但還沒回覆者
+      @friends = current_user.friends.where('friendships.invite = ?', 'accept')
+      # ↑ 用上 friendships table, ↓ 用上 inverse_friendships table
+      @inviters = current_user.frienders.where('friendships.invite = ?', 'pending')
+      
+      render :show
+    else
+      flash[:alert] = '沒有觀看權限'
+      redirect_back(fallback_location: root_path)
+    end
   end
 
   private
