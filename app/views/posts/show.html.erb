@@ -10,8 +10,9 @@
 <!-- post article -->
 <div class="row post-show-row">
   <div class="col-3 profile-link">
-    <%= link_to user_path(@post.user) do %>
-      <div class="text-center py-5">
+    
+    <div class="text-center py-5">
+      <%= link_to user_path(@post.user) do %>
         <% if @post.user.avatar? %>
           <%= image_tag @post.user.avatar, width: '150px', class: 'img-thumbnail' %>
         <% else %>
@@ -19,14 +20,11 @@
             <%= fa_icon 'user-circle-o 5x' %>
           </div>
         <% end %>
-        <h4 class="mt-3"><%= @post.user.name %></h4>
-        <% unless @post.user == current_user %>
-          <%= link_to root_path, class: 'btn btn-outline-success' do %>
-            <%= fa_icon 'plus' %> Friend
-          <% end %>
-        <% end %>
-      </div>
-    <% end %>
+        <h4 class="mt-3"><%= @post.user.name %></h4>          
+      <% end %>
+      <%= link_to "+ Friend", root_path, class: 'btn btn-outline-success' unless @post.user == current_user %>
+    </div>
+    
   
   </div>
   <div class="col-9 post-show-box pt-5 px-5">

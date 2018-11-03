@@ -17,11 +17,11 @@ class User < ApplicationRecord
   has_many :inverse_friendships, -> {where status: true}, class_name: "Friendship", foreign_key: "friend_id"
   has_many :inverse_friends, through: :inverse_friendships, source: :user
   # 自己發出並尚未同意的邀請
-  has_many :waiting_accept_friendships, -> {where status: false}, class_name: "Friendship", dependent: :destroy
-  has_many :waiting_accept_friends, through: :waiting_accept_friendships, source: :friend
+  has_many :request_friendships, -> {where status: false}, class_name: "Friendship", dependent: :destroy
+  has_many :request_friends, through: :waiting_accept_friendships, source: :friend
   # 對方發出並尚未同意的邀請
-  has_many :waiting_response_friendships, -> {where status: false}, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
-  has_many :waiting_response_friends, through: :waiting_response_friendships, source: :user
+  has_many :inverse_request_friendships, -> {where status: false}, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
+  has_many :inverse_request_friends, through: :waiting_response_friendships, source: :user
 
   mount_uploader :avatar, AvatarUploader
 
@@ -29,15 +29,22 @@ class User < ApplicationRecord
     self.role == "admin"
   end
 
-  def is_friend?(user)
+  def friend?(user)
     self.friends.include?(user) || self.inverse_friends.include?(user)
   end
 
-  def he_accepted?(user)
-    self.waiting.accept_friends.include?(user)
+  # status: false
+  def request_friend?(user)
+    self.request_friends.include?(user)
   end
 
-  def i_responsed?(user)
-    self.waiting_resopnse_friends.include?(user)
+  # status: false
+  def inverse_request_friend?(user)
+    self.inverse_request_friends.include?(user)
+  end
+
+  def all_friends
+    friends = self.friends + self.inverse_friends
+    return friends.uniq
   end
 end
