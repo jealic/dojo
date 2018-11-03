@@ -72,10 +72,10 @@ class UsersController < ApplicationController
   end
 
   def accept_friend
-    friendship = Friendship.find_by(user: @user, friend: current_user)
+    @friendship = Friendship.find_by(user: @user, friend: current_user)
     # 找到被別人邀請的那比資料，也就是 B→A + pending 這筆
-    friendship.invite = "accpet" # 改寫 invite column 的 string 值
-    if friendship.save
+    @friendship.invite = "accpet" # 改寫 invite column 的 string 值
+    if @friendship.save
       @accepted_frienders = current_user.frienders.where('friendships.invite = ?', 'pending')
       # 回去找出寄邀請給我的那比資料的 user (使用 inverse_friendships) || 那比資料的 invite 是 pending 值
       flash[:notice] = "Friendship with #{@user.name} is permitted."
@@ -86,9 +86,9 @@ class UsersController < ApplicationController
   end
 
   def ignore_friend
-    friendship = Friendship.find_by(user: @user, friend: current_user)
-    friendship.invite = "ignore"
-    if friendship.save
+    @friendship = Friendship.find_by(user: @user, friend: current_user)
+    @friendship.invite = "ignore"
+    if @friendship.save
       @ignored_frienders = current_user.frienders.where('friendships.invite = ?', 'pending')
       flash[:notice] = "Ignore #{@user.name}'s friendship invitation."
     else

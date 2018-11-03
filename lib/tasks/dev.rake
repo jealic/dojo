@@ -65,6 +65,24 @@ namespace :dev do
     puts "replies to posts are created successfully."
   end
 
+  task fake_friends: :environment do
+    Friendship.destroy_all
 
+    User.all.each do |user|
+      user.friends << User.all.sample(rand(5..8))
+    end
+    # 每個 user 有不同數量的朋友們
+
+    Friendship.all.each do |friendship|
+      
+      friendship.invite = ['pending', 'ignore', 'accept'].sample
+      friendship.save
+      if friendship.user_id == friendship.friend_id
+        friendship.destroy
+      end
+    end
+  end
+
+  puts "All users have 5 to 8 friends."
   
 end
