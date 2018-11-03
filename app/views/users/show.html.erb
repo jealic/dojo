@@ -56,7 +56,7 @@
         <%= link_to 'My Drafts', show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">My Friends</a>
+        <%= link_to 'My Friends', show_friend_user_path(@user), class: "nav-link #{'active' if action?('show_friend')}" %>
       </li>
     </ul>
 
@@ -74,7 +74,7 @@
         <%= link_to "#{@user.name}'s Collection", show_collect_user_path(@user), class: "nav-link #{'active' if action?('show_collect')}" %>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">My Friends</a>
+        <%= link_to "#{@user.name}'s friends", class: "nav-link" %>
       </li>
     </ul>
 
@@ -89,6 +89,8 @@
         <%= render partial: 'replies' %>
       <% elsif action?('show_collect') %>
         <%= render partial: 'collection' %>
+      <% elsif action?('show_friend') %>
+        <%= render partial: 'friends' %>
       <% else %>
         <%= render partial: 'posts' %>
       <% end %>

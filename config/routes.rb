@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get :show_reply
       get :show_draft
       get :show_collect
+      get :show_friend
     end
   end
 end

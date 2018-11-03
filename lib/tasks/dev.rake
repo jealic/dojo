@@ -72,6 +72,7 @@ namespace :dev do
       user = User.all.sample.id
       friend_id = User.all.sample.id
       friendship = Friendship.where(user: User.find(friend_id), friend_id: user.id).first
+    end
   end
 
 

@@ -55,6 +55,19 @@ class UsersController < ApplicationController
     end
   end
 
+  def show_friend
+    if @user == current_user
+      @waitings = @user.waiting_accept_friends
+      @requests = @user.waiting_response_friends
+      @friends = (@user.friends.all + @user.inverse_friends.all.uniq)
+
+      render :show
+    else
+      flash[:alert] = "Have no access to others' friend list."
+      redirect_back fallback_location: root_path
+    end
+  end
+
   private
 
   def user_params
