@@ -26,7 +26,13 @@
 <% if @friends.present? %>
   <div class="bg-light-yellow pb-5 pt-4">
     <div class="text-center">
-      <h4 class="weight-700" style="color: gray">My Friendlist</h4>
+      <% if @user == current_user %>
+        <h4 class="weight-700" style="color: gray">My Friendlist</h4> 
+      <% elsif @user.admin? %>
+        <h4 class="weight-700" style="color: gray"><%= @user.name %>'s Friendlist</h4>
+      <% else %>
+        <h4 class="weight-700" style="color: gray"><%= @user.name %>'s Friendlist</h4>
+      <% end %>
     </div>
     <br>
     <% @friends.each do |user| %>

@@ -65,7 +65,7 @@ class UsersController < ApplicationController
 
       render :show
     else
-      flash[:alert] = "Have no access to others' friend list."
+      flash[:alert] = "Have no access to others' friendlist."
       redirect_back fallback_location: root_path
     end
   end

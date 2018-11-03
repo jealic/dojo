@@ -26,10 +26,10 @@
         <%= link_to category.name, root_path, class: "badge badge-warning mr-2", style: 'font-size: 18px;' %>
       <% end %>
     </div>
-    <% if @post.user == current_user %>
+    <% if @post.user == current_user || current_user.admin? %>
       <div class="comment-edit">
         <%= render partial: 'shared/post-edit-btn', locals: {post: @post} %>
-      </div>  
+      </div>
     <% end %>
   </div>
 
