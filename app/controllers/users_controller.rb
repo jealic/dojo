@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     
     if @user.update(user_params)
       flash[:notice] = "Updated successfully."
-      redirect_back fallback_location: root_path
+      redirect_to user_path(@user)
     else
       flash.now[:alert] = @user.errors.full_messages.to_sentence if @user.errors.any?
       render :edit
@@ -57,8 +57,7 @@ class UsersController < ApplicationController
 
   def show_friend
     if @user == current_user
-      @waitings = @user.waiting_accept_friends
-      @requests = @user.waiting_response_friends
+      
       @friends = (@user.friends.all + @user.inverse_friends.all.uniq)
 
       render :show

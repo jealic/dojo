@@ -18,10 +18,10 @@ class User < ApplicationRecord
   has_many :inverse_friends, through: :inverse_friendships, source: :user
   # 自己發出並尚未同意的邀請
   has_many :request_friendships, -> {where status: false}, class_name: "Friendship", dependent: :destroy
-  has_many :request_friends, through: :waiting_accept_friendships, source: :friend
+  has_many :request_friends, through: :request_friendships, source: :friend
   # 對方發出並尚未同意的邀請
   has_many :inverse_request_friendships, -> {where status: false}, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
-  has_many :inverse_request_friends, through: :waiting_response_friendships, source: :user
+  has_many :inverse_request_friends, through: :inverse_request_friendships, source: :user
 
   mount_uploader :avatar, AvatarUploader
 

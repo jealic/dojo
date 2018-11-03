@@ -1,36 +1,51 @@
 class FriendshipsController < ApplicationController
+  
+  before_action :set_user, only: [:accept, :ignore]
+  before_action :set_friendship, only: [:accept, :ignore]
+
   def create
     @user = User.find(params[:friend_id])
-    @friendship = current_user.friendships.build(friend_id: params[:friend_id])
-    @friendship.status = false
-
-    @f1 = Friendship.where(user_id: current_user, friend_id: params[:friend_id]).first
-    @f2 = Friendship.where(user_id: params[:friend_id], friend_id: current_user).first
-
-    if @f1 == nil && @f2 == nil
-      @friendship.save
-    end
-  end
-
-  def update
-    @user = User.find(params[:id])
-    @friendship = Friendship.where(user_id: params[:id], friend_id: current_user).first
-    @friendship.status = true
-    @friendship.save
-  end
-
-  def destroy
-    @user = User.find(params[:id])
-    if params[:name] == "Unfriend"
-      @friendship = current_user.friendships.where(friend_id: params[:id]).first
-      if @friendship == nil
-        @friendship = Friendship.where(user_id: params[:id], friend_id: current_user).first
+    @friendship = current_user.request_friendships.build(friend_id: params[:friend_id])
+    if @friendship.save
+      if @friendship.save
+        flash[:notice] = "You've sent a friend request."
+      else 
+        flash[:alert] = @friendship.errors.full_messages.to_sentence if @friendship.errors.any?
       end
-    elsif params[:name] == "Ignore"
-      @friendship = Friendship.where(user_id: params[:id], friend_id: current_user).first
+      redirect_back fallback_location: root_path
     end
-      
-    @friendship.destroy
+  end
+
+  def accept
+    
+
+    if @friendship.update(status: true) # accept 被執行後，status 改 true
+      flash[:notice] = "You are friends now."
+    else
+      flash[:alert] = @friendship.errors.full_messages.to_sentence if @friendship.errors.any?
+    end
+    redirect_back fallback_location: root_path
+  end
+
+  def ignore
+
+
+    if @friendship.destroy
+      flash[:alert] = "#{@user.name} isn't your friend anymore."
+    else
+      flash[:alert] = @friendship.errors.full_messages.to_sentence if @friendship.errors.any?
+    end
+    redirect_back fallback_location: root_path
+  end
+
+  private
+
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  def set_friendship
+    @friendship = current_user.inverse_request_friendships.find_by(user_id: params[:id])
   end
 
 end

@@ -3,20 +3,9 @@
     <div class="row">
       <!--USER'S SELF-INTRODUCTION -->
       <div class="col-3">
-        <% if @user.avatar? %>
-          <%= image_tag @user.avatar, width: '300px', class: 'img-thumbnail' %>
-        <% else %>
-          <div class="text-center">
-            <%= fa_icon 'user-circle-o 5x' %>
-          </div>
-        <% end %>
-        
-        <div class="text-center">
-          <br>
-          <h4><%= @user.name %></h4>
-        </div>
+        <%= render partial: 'shared/user-info', locals: {user: @user} %>
       </div>
-      <div class="col-9">
+      <div class="col-9 py-5">
         <p><%= @user.intro %></p>
         <% if @user == current_user %>
           <%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-outline-dark' %>

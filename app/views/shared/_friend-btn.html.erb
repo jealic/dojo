@@ -4,9 +4,11 @@
       <%= link_to "Accpet", accept_friendship_path(user), class: "btn btn-outline-success", method: :post %>
       <%= link_to "Ignore", ignore_friendship_path(user), class: "btn btn-outline-dark", method: :delete %>
     <% elsif current_user.request_friend?(user) %> <!-- 我先發邀請了 -->
-      <%= button_to "Waiting...", class: 'btn btn-outline-secondary' %>
+      <button type="button" class='btn btn-outline-secondary disabled'>Waiting...</button>
     <% else %> <!-- 還不是朋友 -->
-      <span><%= link_to "Friend", class: 'badge badge-info' %></span>
+      <%= link_to friendships_path(friend_id: user), class: "btn btn-outline-success", method: :post do %>
+        <%= fa_icon 'plus' %> Friend
+      <% end %>
     <% end %>
   <% end %>
 <% end %>

@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   resources :categories, only: :show
 
-  resouces :friendships, only: :create do
+  resources :friendships, only: :create do
     member do
       post :accept
       delete :ignore

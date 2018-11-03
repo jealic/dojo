@@ -1,0 +1,13 @@
+<div class="text-center py-5">
+  <%= link_to user_path(user), class: 'profile-link' do %>
+    <% if user.avatar? %>
+      <%= image_tag user.avatar, width: '150px', class: 'img-thumbnail' %>
+    <% else %>
+      <div class="text-center">
+        <%= fa_icon 'user-circle-o 5x' %>
+      </div>
+    <% end %>
+    <h4 class="mt-3"><%= user.name %></h4>          
+  <% end %>
+  <%= render partial: "shared/friend-btn", locals: {user: user} %>
+</div>
