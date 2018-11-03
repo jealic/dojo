@@ -20,7 +20,7 @@ class FriendshipsController < ApplicationController
     
 
     if @friendship.update(status: true) # accept 被執行後，status 改 true
-      flash[:notice] = "You are friends now."
+      flash[:notice] = "#{@user.name} and you are friends now."
     else
       flash[:alert] = @friendship.errors.full_messages.to_sentence if @friendship.errors.any?
     end

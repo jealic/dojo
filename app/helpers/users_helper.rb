@@ -1,6 +1,6 @@
 module UsersHelper
   def request_friend(user)
-    unless @user.is_friend?(user)
+    unless @user.friend?(user)
       render partial: "shared/user_item", locals: { user: user }
     end
   end

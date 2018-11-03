@@ -1,1 +1,72 @@
-<h1>Friends list</h1>
+<% if @requests.exists? %>
+  <div class="bg-light-yellow pb-5 pt-4">
+    <div class="container"> 
+      <div class="text-center">
+        <p class="weight-700" style="color: gray">Waiting for Response</p>
+      </div>
+      <br>
+      <% @requests.each do |user| %>
+        <div class="inline-blk text-center">
+          <%= link_to user_path(user), class: 'profile-link' do %>
+            <% if user.avatar? %>
+              <%= image_tag user.avatar, width: '100px', class: 'img-thumbnail' %>
+            <% else %>
+              <div class="text-center">
+                <%= fa_icon 'user-circle-o 3x' %>
+              </div>
+            <% end %>
+            <h5 class="mt-3"><%= user.name %></h5>
+          <% end %>
+          <%= render partial: 'shared/friend-btn', locals: {user: user} %>
+        </div>
+      <% end %>
+      
+    </div>
+  </div>
+<% elsif @invites.present? %>
+  <div class="bg-dark-yellow pb-5 pt-4">
+    <div class="text-center">
+      <p class="weight-700" style="color: gray">Users that want to friends</p>
+    </div>
+    <br>
+    <% @invites.each do |user| %>
+      <div class="inline-blk text-center">
+        <%= link_to user_path(user), class: 'profile-link' do %>
+          <% if user.avatar? %>
+            <%= image_tag user.avatar, width: '100px', class: 'img-thumbnail' %>
+          <% else %>
+            <div class="text-center">
+              <%= fa_icon 'user-circle-o 3x' %>
+            </div>
+          <% end %>
+          <h5 class="mt-3"><%= user.name %></h5>
+        <% end %>
+        <%= render partial: 'shared/friend-btn', locals: {user: user} %>
+      </div>
+    <% end %>
+  </div>
+<% elsif @friends.present? %>
+  <div class="bg-light-yellow pb-5 pt-4">
+    <div class="text-center">
+      <h4 class="weight-700" style="color: gray">My Friendlist</h4>
+    </div>
+    <br>
+    <% @friends.each do |user| %>
+      <div class="inline-blk text-center">
+        <%= link_to user_path(user), class: 'profile-link' do %>
+          <% if user.avatar? %>
+            <%= image_tag user.avatar, width: '100px', class: 'img-thumbnail' %>
+          <% else %>
+            <div class="text-center">
+              <%= fa_icon 'user-circle-o 3x' %>
+            </div>
+          <% end %>
+          <h5 class="mt-3"><%= user.name %></h5>
+        <% end %>
+        <%= render partial: 'shared/friend-btn', locals: {user: user} %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+
+<% end %>
