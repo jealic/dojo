@@ -67,20 +67,19 @@ namespace :dev do
 
   task fake_friends: :environment do
     Friendship.destroy_all
-
-    30.times do
+    30.times do |i|
       user = User.all.sample
       friend = User.where.not(id: user.id).sample
-      unless user.request_friend?(friend) || friend.inverse_request_friend?(user)
-        user.request_friendships.create!(friend: friend)
+      unless user.request_friend?(friend) || user.inverse_request_friend?(friend)
+        friendship = user.request_friendships.create!(friend: friend)
         puts "#{user.name} invited #{friend.name}"
       end
     end
 
-    15.times do
-      friendship = Friendship.where(status: false).sample # 我寄邀請但還沒得到回覆
-      friendship.update(status: true) # 設定對方回覆 accept
-      puts "#{friendship.user_id} accepts #{friendship.friend_id}'s friendship."
+    15.times do 
+      friendship = Friendship.where(status: false).sample
+      friendship.update(status: true)
+      puts "#{friendship.user_id} accepted #{friendship.friend_id} as a friend."
     end
   end
 
