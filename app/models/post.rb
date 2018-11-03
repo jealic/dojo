@@ -31,4 +31,20 @@ class Post < ApplicationRecord
     self.viewed_count += 1
     self.save
   end
+
+  def can_see?(user)
+    if self.user == user
+      return true
+    elsif self.draft && self.user == user
+      return true
+    elsif self.privacy == 'Only Me' && self.user == user
+      return true
+    elsif self.privacy == 'All' && !self.draft
+      return true
+    elsif self.privacy == "Only Friends"
+      self.user.friends.where('friendships.status = ?', 'true').include?(user)
+    else
+      return false
+    end
+  end
 end
