@@ -3,18 +3,24 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :collect, :uncollect, :destroy]
 
   def index
-    if current_user
-      @posts = Post.published.where(privacy: 1).or(current_user.posts.published.where(privacy: 3)).or(Post.published.friend_post(current_user))
-      @q = @posts.ransack(params[:q])
-      @posts = @q.result.order(id: :desc).page(params[:page]).per(20)
-    else
-      @posts = Post.published.where(privacy: 1)
-    end
     @categories = Category.all
-    if params[:category].present?
-      @category = params[:category]
-      @posts = @posts.joins(:category).where('categories.name = ?', @category)
+    if current_user
+      if params[:category_id]
+        @category = Category.find(params[:category_id])
+        @q = @category.posts.access_posts(current_user).published.ransack(params[:q])
+      else
+        @q = Post.access_posts(current_user).published.ransack(params[:q])
+      end
+    else
+      if params[:category_id]
+        @category = Category.find(params[:category_id])
+        @q = @category.posts.published.where(privacy: "all_user").ransack(params[:q])
+      else
+        @q = Post.published.where(privacy: "all_user").ransack(params[:q])
+      end
     end
+    
+    @posts = @q.result.order(id: :asc).page(params[:page]).per(20)
   end
 
   def new
@@ -40,12 +46,15 @@ class PostsController < ApplicationController
 
   def show
     
-    if @post.draft == false
+    if @post.can_see?(current_user)
       @reply = Reply.new
+      @replies = @post.replies.all("update_at DESC").page(params[:page]).per(20)
+      @post.count_views
+      @post.save
+    else
+      flash[:alert] = 'Have no access to private posts.'
+      redirect_back fallback_location: root_path
     end
-    @replies = @post.replies.order("updated_at DESC").page(params[:page]).per(20)
-    # count views
-    @post.count_views
   end
 
   def edit

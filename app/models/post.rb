@@ -22,6 +22,15 @@ class Post < ApplicationRecord
     where(draft: false)
   }
 
+  # 沒有這個設定沒辦法寫入，privacy 會是 0
+  enum privacy: {
+    all_user:     1, # 公開
+    only_friend:  2, # 好友限定
+    only_me:      3, # 僅限自己
+
+  # 1,2,3 只是順序，不能被 pass 進 tables
+  }
+
   def is_collected?(user)
     self.collectors.include?(user)    
   end
@@ -32,10 +41,10 @@ class Post < ApplicationRecord
     self.save
   end
 
-  scope :friend_post, -> (user) {
-    friends = user.friends + user.inverse_friends
-    where(privacy: 2).where('user_id in (?)', friends.map{|x|x.id})
-  }
+  # 沒有 filter 到的感覺
+  def self.access_posts(user)
+    Post.where(privacy: "only_friend", user: user.all_friends).or( where(privacy: "all_user")).or(where(privacy: "only_me", user: user))
+  end
 
   def can_see?(user) 
   # self 用在 post 上，只要符合其中一個條件就可以看到

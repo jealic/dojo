@@ -35,7 +35,7 @@ namespace :dev do
           title: FFaker::Book.title,
           content: FFaker::Book.description,
           draft: [true, false, false, false].sample,
-          privacy: rand(1..3),
+          privacy: ["all_user", "only_friend", "only_me"].sample,
           image: File.open("#{Rails.root}/public/post-img/#{rand(1..15)}.jpg")
         )
       end

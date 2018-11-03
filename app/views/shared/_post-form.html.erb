@@ -15,7 +15,7 @@
       <div class="container">
         <div class="row">
           <div class="col-8">
-            <%= f.input :privacy, as: :radio_buttons, collection: [['All', '1'], ['Only Friends', '2'], ['Only Me', '3']], label_method: :first, value_method: :first, checked: ['All', '1'], wrapper: :vertical_collection_inline %>
+            <%= f.input :privacy, as: :radio_buttons, collection: [[ :all_user, "all"], [ :only_friend, "friends"], [:only_me, "me"]], label_method: :second, value_method: :first, wrapper: :vertical_collection_inline %>
             <%= f.association :categories, label: false, as: :check_boxes, collection: @categories, input_html: {multiple: true}, wrapper: :vertical_collection_inline %>
           </div>
           <div class="col-4">
