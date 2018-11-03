@@ -61,7 +61,7 @@ class UsersController < ApplicationController
       # 我邀請的人，還沒得到回覆
       @invites = @user.inverse_request_friends.order('friendships.created_at DESC')
       # 邀請我的人，還沒得到回覆
-      @friends = (@user.friends + @user.inverse_friends).uniq
+      @friends = @user.friends + @user.inverse_friends
 
       render :show
     else

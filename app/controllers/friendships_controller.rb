@@ -17,7 +17,7 @@ class FriendshipsController < ApplicationController
   end
 
   def accept
-    
+    @friendships = Friendship.all
 
     if @friendship.update(status: true) # accept 被執行後，status 改 true
       flash[:notice] = "#{@user.name} and you are friends now."
