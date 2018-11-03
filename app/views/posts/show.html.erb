@@ -10,10 +10,9 @@
 <!-- post article -->
 <div class="row post-show-row">
   <div class="col-3">
-    
-    <%= render partial: 'shared/user-info', locals: {user: @post.user} %>
-    
-  
+    <div class="text-center py-5">
+      <%= render partial: 'shared/user-info', locals: {user: @post.user} %>
+    </div>
   </div>
   <div class="col-9 post-show-box pt-5 px-5">
     <% if @post.image? %>
@@ -29,12 +28,7 @@
     </div>
     <% if @post.user == current_user %>
       <div class="comment-edit">
-        <%= link_to edit_post_path(@post) do %>
-          <%= fa_icon 'edit', style: 'font-size: 27px;' %> 
-        <% end %>
-        <%= link_to post_path(@post), method: :delete, data: {confirm: "Are you sure?"} do %>
-          <%= fa_icon 'times', style: 'border: 2px solid #007bff; border-radius: 3px; padding: 2px 4px;' %>
-        <% end %>
+        <%= render partial: 'shared/post-edit-btn', locals: {post: @post} %>
       </div>  
     <% end %>
   </div>
@@ -64,14 +58,7 @@
       <div class="col-9 post-show-box py-4 px-5">
         <p><%= reply.comment %></p>
         <% if reply.user == current_user %>
-          <div class="comment-edit">
-            <%= link_to edit_post_reply_path(reply.post, reply) do %>
-              <%= fa_icon 'edit', style: 'font-size: 27px;' %>
-            <% end %>
-            <%= link_to post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure?"} do %>
-              <%= fa_icon 'times', style: 'border: 2px solid #007bff; border-radius: 3px; padding: 2px 4px;' %>  
-            <% end %>    
-          </div>
+          <%= render partial: 'shared/reply-edit-btn', locals: {reply: reply} %>
         <% end %>
       </div>
       

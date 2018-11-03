@@ -14,24 +14,12 @@
           <div class="clearfix"></div>
         </div>
         
+        <div class="user-comment-area mb-3">
+          <%= reply.comment %>
+        </div>
         <% if reply.user == current_user %>
-          <div class="user-comment-area mb-3">
-            <%= reply.comment %>
-          </div>
-          <div class="comment-edit">
-            <%= link_to edit_post_reply_path(reply.post, reply) do %>
-              <%= fa_icon 'edit', style: 'font-size: 27px;' %>
-            <% end %>
-            <%= link_to post_reply_path(reply.post, reply), method: :delete, data: {confirm: "Are you sure?"} do %>
-              <%= fa_icon 'times', style: 'border: 2px solid #007bff; border-radius: 3px; padding: 2px 4px;' %>  
-            <% end %>
-          </div>
-          <div class="clearfix"></div>
-          
-        <% else %>
-          <div class="user-comment-area">
-            <%= reply.comment %>
-          </div>
+          <%= render partial: 'shared/reply-edit-btn', locals: {reply: reply} %>
+          <div class="clearfix"></div>        
         <% end %>
         
       </div>

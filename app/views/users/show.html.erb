@@ -3,17 +3,14 @@
     <div class="row">
       <!--USER'S SELF-INTRODUCTION -->
       <div class="col-3">
-        <%= render partial: 'shared/user-info', locals: {user: @user} %>
+        <div class="text-center py-5">
+          <%= render partial: 'shared/user-info', locals: {user: @user} %>
+        </div>
       </div>
       <div class="col-9 py-5">
         <p><%= @user.intro %></p>
         <% if @user == current_user %>
           <%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-outline-dark' %>
-        <% else %>
-          <%= link_to class: 'btn btn-outline-dark' do %>
-            <%= fa_icon 'plus' %>
-            <span>Friend</span>
-          <% end %>
         <% end %>
       </div>
     </div>
@@ -63,7 +60,7 @@
         <%= link_to "#{@user.name}'s Collection", show_collect_user_path(@user), class: "nav-link #{'active' if action?('show_collect')}" %>
       </li>
       <li class="nav-item">
-        <%= link_to "#{@user.name}'s friends", class: "nav-link" %>
+        <%= link_to "#{@user.name}'s friends", show_friend_user_path(@user), class: "nav-link #{'active' if action?('show_friend')}" %>
       </li>
     </ul>
 
