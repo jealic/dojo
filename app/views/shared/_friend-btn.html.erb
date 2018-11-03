@@ -1,5 +1,12 @@
 <% if user != current_user %>
   <% unless current_user.friend?(user) %> <!--不是我的朋友才要加朋友 -->
     <% if current_user.inverse_request_friend?(user) %> <!-- 他已經先邀請我了 -->
-      <%= link_to %>  
+      <%= link_to "Accpet", accept_friendship_path(user), class: "btn btn-outline-success", method: :post %>
+      <%= link_to "Ignore", ignore_friendship_path(user), class: "btn btn-outline-dark", method: :delete %>
+    <% elsif current_user.request_friend?(user) %> <!-- 我先發邀請了 -->
+      <%= button_to "Waiting...", class: 'btn btn-outline-secondary' %>
+    <% else %> <!-- 還不是朋友 -->
+      <span><%= link_to "Friend", class: 'badge badge-info' %></span>
     <% end %>
+  <% end %>
+<% end %>
