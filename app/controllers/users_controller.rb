@@ -55,6 +55,60 @@ class UsersController < ApplicationController
     end
   end
 
+  def invite_friend
+    if @user == current_user
+      flash[:alert] = "Can't friend myself."
+      redirect_back fallback_location: root_path
+      # 防止一切平台外部的操作
+    else
+      @friendship = Friendship.create(user: current_user, friend: @user)
+      # 指定 pass in tables 的資料
+      if @friendship.save
+        flash[:notice] = "Sent invitation"
+      else
+        flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
+      end
+    end
+  end
+
+  def accept_friend
+    @friendship = Friendship.find_by(user: @user, friend: current_user)
+    # 找到被別人邀請的那比資料，也就是 B→A + pending 這筆
+    @friendship.invite = "accpet" # 改寫 invite column 的 string 值
+    if @friendship.save
+      @accepted_frienders = current_user.frienders.where('friendships.invite = ?', 'pending')
+      # 回去找出寄邀請給我的那比資料的 user (使用 inverse_friendships) || 那比資料的 invite 是 pending 值
+      flash[:notice] = "Friendship with #{@user.name} is permitted."
+    else
+      flash[:alert] = friendship.errors.full_messages.to_sentence if friendship.errors.any?
+      redirect_back fallback_location: root_path
+    end
+  end
+
+  def ignore_friend
+    @friendship = Friendship.find_by(user: @user, friend: current_user)
+    friendship.invite = "ignore"
+    if friendship.save
+      @ignored_frienders = current_user.frienders.where('friendships.invite = ?', 'pending')
+      flash[:notice] = "Ignore #{@user.name}'s friendship invitation."
+    else
+      flash[:alert] = friendsihp.errors.full_messages.to_sentence if friendship.errors.any?
+      redirect_back fallback_location: root_path
+    end
+  end
+
+  def show_friend
+    if @user == current_user
+      @waiting_friends = current_user.friends.where.not('friendships.invite = ?', 'accept')
+      @accepted_frienders = current_user.friends.where('friendships.invite = ?', 'accept')
+      @ignored_frienders = current_user.frienders.where('friendships.invite = ?', 'pending')
+      render :show
+    else
+      flash[:alert] = "Have no authority to the content"
+      redirect_back fallback_location: root_path
+    end
+  end
+
   private
 
   def user_params
