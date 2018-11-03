@@ -56,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   def show_friend
-    if @user == current_user || current_user.admin?
+    if @user == current_user
       @requests= @user.request_friends
       # 我邀請的人，還沒得到回覆
       @invites = @user.inverse_request_friends.order('friendships.created_at DESC')
