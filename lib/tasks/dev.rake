@@ -65,6 +65,15 @@ namespace :dev do
     puts "replies to posts are created successfully."
   end
 
+  task fake_friends: :environment do
+    Friendship.destroy_all
+
+    20.times do |i|
+      user = User.all.sample.id
+      friend_id = User.all.sample.id
+      friendship = Friendship.where(user: User.find(friend_id), friend_id: user.id).first
+  end
+
 
   
 end
