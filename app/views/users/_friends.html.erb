@@ -1,0 +1,49 @@
+<% if @requests.exists? %>
+  <div class="bg-light-yellow pb-5 pt-4">
+    <div class="container"> 
+      <div class="text-center">
+        <h5 class="weight-700" style="color: gray">Waiting for Response</h5>
+      </div>
+      <br>
+      <% @requests.each do |user| %>
+        <%= render partial: 'shared/user-info2', locals: {user: user} %>
+      <% end %>
+      
+    </div>
+  </div>
+<% end %>
+<% if @invites.present? %>
+  <div class="bg-dark-yellow pb-5 pt-4">
+    <div class="text-center">
+      <h5 class="weight-700" style="color: gray">Users that want to be friends</h5>
+    </div>
+    <br>
+    <% @invites.each do |user| %>
+      <%= render partial: 'shared/user-info2', locals: {user: user} %>
+    <% end %>
+  </div>
+<% end %>
+<% if @friends.present? %>
+  <div class="bg-light-yellow pb-5 pt-4">
+    <div class="text-center">
+      <% if @user == current_user %>
+        <h4 class="weight-700" style="color: gray">My Friendlist</h4> 
+      <% elsif @user.admin? %>
+        <h4 class="weight-700" style="color: gray"><%= @user.name %>'s Friendlist</h4>
+      <% else %>
+        <h4 class="weight-700" style="color: gray"><%= @user.name %>'s Friendlist</h4>
+      <% end %>
+    </div>
+    <br>
+    <% @friends.each do |user| %>
+      <%= render partial: 'shared/user-info2', locals: {user: user} %>
+    <% end %>
+  </div>
+<% end %>
+<% if @friendsips.present? %>
+  <div class="bg-light-yellow pb-5 pt-4">
+    <div class="text-center">
+      <h4 class="weight-700" style="color: gray">Read some posts, share some comments and make friends!</h4>
+    </div>
+  </div>
+<% end %>

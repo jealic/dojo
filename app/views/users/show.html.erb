@@ -3,28 +3,14 @@
     <div class="row">
       <!--USER'S SELF-INTRODUCTION -->
       <div class="col-3">
-        <% if @user.avatar? %>
-          <%= image_tag @user.avatar, width: '300px', class: 'img-thumbnail' %>
-        <% else %>
-          <div class="text-center">
-            <%= fa_icon 'user-circle-o 5x' %>
-          </div>
-        <% end %>
-        
-        <div class="text-center">
-          <br>
-          <h4><%= @user.name %></h4>
+        <div class="text-center py-5">
+          <%= render partial: 'shared/user-info', locals: {user: @user} %>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-9 py-5">
         <p><%= @user.intro %></p>
         <% if @user == current_user %>
           <%= link_to 'Edit', edit_user_path(@user), class: 'btn btn-outline-dark' %>
-        <% else %>
-          <%= link_to class: 'btn btn-outline-dark' do %>
-            <%= fa_icon 'plus' %>
-            <span>Friend</span>
-          <% end %>
         <% end %>
       </div>
     </div>
@@ -56,7 +42,7 @@
         <%= link_to 'My Drafts', show_draft_user_path(@user), class: "nav-link #{'active' if action?('show_draft')} " %>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">My Friends</a>
+        <%= link_to 'My Friends', show_friend_user_path(@user), class: "nav-link #{'active' if action?('show_friend')}" %>
       </li>
     </ul>
 
@@ -74,7 +60,7 @@
         <%= link_to "#{@user.name}'s Collection", show_collect_user_path(@user), class: "nav-link #{'active' if action?('show_collect')}" %>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link">My Friends</a>
+        <%= link_to "#{@user.name}'s friends", show_friend_user_path(@user), class: "nav-link #{'active' if action?('show_friend')}" %>
       </li>
     </ul>
 
@@ -89,6 +75,8 @@
         <%= render partial: 'replies' %>
       <% elsif action?('show_collect') %>
         <%= render partial: 'collection' %>
+      <% elsif action?('show_friend') %>
+        <%= render partial: 'friends' %>
       <% else %>
         <%= render partial: 'posts' %>
       <% end %>

@@ -40,11 +40,14 @@ class PostsController < ApplicationController
   end
 
   def edit
-    
     if @post.user = current_user
+      if current_user.admin?
+        flash[:alert] = 'Admin can only delete the post.'
+        redirect_back fallback_location: root_path
+      end
       @categories = Category.all
     else
-      flash[:alert] = 'You have no access!'
+      flash[:alert] = 'You have no access to this action!'
       redirect_back fallback_location: root_path
     end
   end
@@ -96,13 +99,15 @@ class PostsController < ApplicationController
 
   def destroy
     
-    if @post.user = current_user
+    if @post.user = current_user || current_user.admin?
       @post.destroy
       flash[:notice] = "Successfully deleted post \"#{@post.title}\"."
+      redirect_to root_path
     else
       flash[:alert] = "Have no authority to this deleting action!"
+      redirect_back fallback_location: root_path
     end
-    redirect_back fallback_location: root_path
+    
   end
   
   private

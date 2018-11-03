@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     
     if @user.update(user_params)
       flash[:notice] = "Updated successfully."
-      redirect_back fallback_location: root_path
+      redirect_to user_path(@user)
     else
       flash.now[:alert] = @user.errors.full_messages.to_sentence if @user.errors.any?
       render :edit
@@ -52,6 +52,21 @@ class UsersController < ApplicationController
     else
       @collects = @user.collected_posts.order("collects.created_at DESC").page(params[:page]).per(10)
       render :show
+    end
+  end
+
+  def show_friend
+    if @user == current_user || current_user.admin?
+      @requests= @user.request_friends
+      # 我邀請的人，還沒得到回覆
+      @invites = @user.inverse_request_friends.order('friendships.created_at DESC')
+      # 邀請我的人，還沒得到回覆
+      @friends = @user.friends + @user.inverse_friends
+
+      render :show
+    else
+      flash[:alert] = "Have no access to others' friendlist."
+      redirect_back fallback_location: root_path
     end
   end
 

@@ -1,0 +1,9 @@
+<div class="text-center">
+  <%= link_to user_path(user) do %>
+    <%= image_tag user.avatar, width: 80, height: 80 if user.avatar? %>
+    <div class="avatar_name"><%= user.name %></div>
+  <% end %>
+</div>
+<div class="friend_button" id="user-<%= user.id %>"><!-- Ajax prepare -->
+  <%= render partial: "shared/friend_button", locals: { user: user } %>
+</div>
