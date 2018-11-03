@@ -3,9 +3,18 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :collect, :uncollect, :destroy]
 
   def index
-    @q = Post.where(draft: false).ransack(params[:q])
-    @posts = @q.result.order(id: :desc).page(params[:page]).per(20)
+    if current_user
+      @posts = Post.published.where(privacy: 1).or(current_user.posts.published.where(privacy: 3)).or(Post.published.friend_post(current_user))
+      @q = @posts.ransack(params[:q])
+      @posts = @q.result.order(id: :desc).page(params[:page]).per(20)
+    else
+      @posts = Post.published.where(privacy: 1)
+    end
     @categories = Category.all
+    if params[:category].present?
+      @category = params[:category]
+      @posts = @posts.joins(:category).where('categories.name = ?', @category)
+    end
   end
 
   def new
@@ -40,11 +49,12 @@ class PostsController < ApplicationController
   end
 
   def edit
-    if @post.user = current_user
-      if current_user.admin?
-        flash[:alert] = 'Admin can only delete the post.'
-        redirect_back fallback_location: root_path
-      end
+    if current_user.admin? && @post.user != current_user
+      flash[:alert] = "Admin can't edit other people's posts!"
+      redirect_back fallback_location: root_path
+    elsif current_user.admin? && @post.user == current_user
+      @categories = Category.all
+    elsif @post.user == current_user
       @categories = Category.all
     else
       flash[:alert] = 'You have no access to this action!'

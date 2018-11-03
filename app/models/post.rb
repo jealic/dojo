@@ -32,16 +32,25 @@ class Post < ApplicationRecord
     self.save
   end
 
-  def can_see?(user)
+  scope :friend_post, -> (user) {
+    friends = user.friends + user.inverse_friends
+    where(privacy: 2).where('user_id in (?)', friends.map{|x|x.id})
+  }
+
+  def can_see?(user) 
+  # self 用在 post 上，只要符合其中一個條件就可以看到
+  # 在首頁，user 以 current_user 為先決判斷條件；
+  # 自己可以全部 user 的公開 post，加上我自己的，
+  # 再加上和我是朋友關係的 user 的 朋友可見 post 就其全了。
     if self.user == user
       return true
     elsif self.draft && self.user == user
       return true
-    elsif self.privacy == 'Only Me' && self.user == user
+    elsif self.privacy == '3' && self.user == user
       return true
-    elsif self.privacy == 'All' && !self.draft
+    elsif self.privacy == '1' && !self.draft
       return true
-    elsif self.privacy == "Only Friends"
+    elsif self.privacy == "2"
       self.user.friends.where('friendships.status = ?', 'true').include?(user)
     else
       return false
