@@ -1,0 +1,5 @@
+<% if user != current_user %>
+  <% unless current_user.friend?(user) %> <!--不是我的朋友才要加朋友 -->
+    <% if current_user.inverse_request_friend?(user) %> <!-- 他已經先邀請我了 -->
+      <%= link_to %>  
+    <% end %>

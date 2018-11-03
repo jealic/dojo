@@ -23,6 +23,13 @@ Rails.application.routes.draw do
 
   resources :categories, only: :show
 
+  resouces :friendships, only: :create do
+    member do
+      post :accept
+      delete :ignore
+    end
+  end
+
   resources :users do
     member do
       get :show_reply
