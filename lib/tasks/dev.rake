@@ -81,8 +81,7 @@ namespace :dev do
         friendship.destroy
       end
     end
+    puts "All users have 5 to 8 friends."
   end
-
-  puts "All users have 5 to 8 friends."
   
 end

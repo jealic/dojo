@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     
     if @user.update(user_params)
       flash[:notice] = "Updated successfully."
-      redirect_back fallback_location: root_path
+      redirect_to user_path(@user)
     else
       flash.now[:alert] = @user.errors.full_messages.to_sentence if @user.errors.any?
       render :edit
