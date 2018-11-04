@@ -42,40 +42,43 @@ class Api::V1::PostsController < ApiController
   end
 
   def show
-    
-    if !@post
-      render json: {
-        message: "can't find the post!",
-        status: 400
-      }
-    else
-      @post.count_views
-      @replies = @post.replies
-      render json: {
-        title: @post.title,
-        content: @post.content,
-        image: @post.image,
-        draft: @post.draft,
-        privacy: @post.privacy,
+    if current_user 
+      if !@post
+        render json: {
+          message: "can't find the post!",
+          status: 400
+        }
+      else
+        if @post.count_views
+          @replies = @post.replies
+          render json: {
+            title: @post.title,
+            content: @post.content,
+            image: @post.image,
+            draft: @post.draft,
+            privacy: @post.privacy,
 
-        categories_data: @post.categories.map do |c|
-          {
-            name: c.name,
+            categories_data: @post.categories.map do |c|
+              {
+                name: c.name,
+              }
+            end,
+            replies_data: @post.replies.map do |reply|
+              {
+                user: reply.user.name,
+                comment: reply.comment,
+              }
+            end,
           }
-        end,
-        replies_data: @post.replies.map do |reply|
-          {
-            user: reply.user.name,
-            comment: reply.comment,
-          }
-        end,
-      }
+        end
+      end
     end
   end
 
   def create
-    @post = Post.new(post_params)
-
+      
+    @post = current_user.posts.build(post_params) 
+    
     if @post.save
       render json: {
         message: "A Post has been created.",
@@ -83,10 +86,11 @@ class Api::V1::PostsController < ApiController
       }
     else
       render json: {
-        errors: @post.erros
+        errors: @post.errors
       }
     end
   end
+  
 
   def update
     if @post.update(post_params)
@@ -101,7 +105,7 @@ class Api::V1::PostsController < ApiController
     end
   end
 
-   def destroy
+  def destroy
     @post.destroy
     render json: {
       message: "Post destroy successfully!"
