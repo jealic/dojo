@@ -1,9 +1,14 @@
 namespace :dev do
   task rebuild: [
-    "db:drop",
-    "db:create",
-    "db:migrate",
-    "db:seed"
+   # "db:drop",
+   # "db:create",
+   # "db:migrate",
+  system 'rails db:seed'
+  system 'rails dev:fake_user'
+  system 'rails dev:fake_post'
+  system 'rails dev:fake_post_category'
+  system 'rails dev:fake_reply'
+  system 'rails dev:fake_friends'
   ]
 
   task fake_user: :environment do 
@@ -45,7 +50,7 @@ namespace :dev do
 
   task fake_post_category: :environment do
     Post.all.each do |post|
-      post.categories << Category.all.sample
+      post.categories << Category.all.sample(rand(1..3))
     end
     puts "All posts have a category."
   end
