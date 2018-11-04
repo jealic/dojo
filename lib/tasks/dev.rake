@@ -3,12 +3,12 @@ namespace :dev do
    # "db:drop",
    # "db:create",
    # "db:migrate",
-  system 'rails db:seed'
-  system 'rails dev:fake_user'
-  system 'rails dev:fake_post'
-  system 'rails dev:fake_post_category'
-  system 'rails dev:fake_reply'
-  system 'rails dev:fake_friends'
+   "db:seed",
+   "dev:fake_user",
+   "dev:fake_post",
+   "dev:fake_post_category",
+   "dev:fake_reply",
+   "dev:fake_friend",
   ]
 
   task fake_user: :environment do 
