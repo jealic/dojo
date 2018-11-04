@@ -38,4 +38,10 @@ Rails.application.routes.draw do
       get :show_friend
     end
   end
+
+  namespace :api, default: {format: :json} do
+    namespace :v1 do
+      resources :posts, only: [:index, :create, :show, :update, :destroy]
+    end
+  end
 end
