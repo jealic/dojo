@@ -46,13 +46,13 @@ class PostsController < ApplicationController
 
   def show
     
-    if @post.can_see?(current_user)
+    if @post.be_viewed_by?(current_user)
       @reply = Reply.new
-      @replies = @post.replies.all("update_at DESC").page(params[:page]).per(20)
+      @replies = @post.replies.order("updated_at DESC").page(params[:page]).per(20)
       @post.count_views
       @post.save
     else
-      flash[:alert] = 'Have no access to private posts.'
+      flash[:alert] = 'The post is not open to you.'
       redirect_back fallback_location: root_path
     end
   end

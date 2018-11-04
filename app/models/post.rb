@@ -43,10 +43,10 @@ class Post < ApplicationRecord
 
   # 沒有 filter 到的感覺
   def self.access_posts(user)
-    Post.where(privacy: "only_friend", user: user.all_friends).or( where(privacy: "all_user")).or(where(privacy: "only_me", user: user))
+    Post.where(privacy: "only_friend", user: user.all_friends).or( Post.where(privacy: "all_user")).or(Post.where(privacy: "only_me", user: user))
   end
 
-  def can_see?(user) 
+  def be_viewed_by?(user) 
   # self 用在 post 上，只要符合其中一個條件就可以看到
   # 在首頁，user 以 current_user 為先決判斷條件；
   # 自己可以全部 user 的公開 post，加上我自己的，
@@ -55,12 +55,13 @@ class Post < ApplicationRecord
       return true
     elsif self.draft && self.user == user
       return true
-    elsif self.privacy == '3' && self.user == user
+    elsif self.privacy == 'only_me' && self.user == user
       return true
-    elsif self.privacy == '1' && !self.draft
+    elsif self.privacy == 'all_user' && !self.draft
       return true
-    elsif self.privacy == "2"
+    elsif self.privacy == 'only_friend'
       self.user.friends.where('friendships.status = ?', 'true').include?(user)
+      return true
     else
       return false
     end
