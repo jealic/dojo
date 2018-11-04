@@ -8,7 +8,7 @@ namespace :dev do
    "dev:fake_post",
    "dev:fake_post_category",
    "dev:fake_reply",
-   "dev:fake_friend",
+   "dev:fake_friends",
   ]
 
   task fake_user: :environment do 
