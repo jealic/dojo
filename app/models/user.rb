@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  before_create :generate_authentication_token
+
   has_many :posts
   has_many :replies, dependent: :destroy
   has_many :collects, dependent: :destroy
@@ -24,6 +26,11 @@ class User < ApplicationRecord
   has_many :inverse_request_friends, through: :inverse_request_friendships, source: :user
 
   mount_uploader :avatar, AvatarUploader
+
+
+  def generate_authentication_token
+     self.authentication_token = Devise.friendly_token
+  end
 
   def admin?
     self.role == "admin"
@@ -47,4 +54,5 @@ class User < ApplicationRecord
     friends = self.friends + self.inverse_friends
     return friends.uniq
   end
+
 end
