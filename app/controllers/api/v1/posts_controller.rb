@@ -5,69 +5,107 @@ class Api::V1::PostsController < ApiController
   def index
     @categories = Category.all
     if current_user
-      if @category = Category.find_by(id: params[:category_id])
-        @posts = @category.posts.access_posts(current_user).published
-      else
-        @posts = Post.access_posts(current_user).published
-      end
-    else
-      if @category = Category.find_by(id: params[:category_id])
-        @posts = @category.posts.published.where(privacy: "all_user")
-      else
-        @posts = Post.published.where(privacy: "all_user")
-      end
-    end
 
-    render json: {
-      data: @posts.map do |post|
-        {
-          title: post.title,
-          content: post.content,
-          image: post.image,
-          categories: post.categories.map do |c|
+      if params[:category_id]
+        render json: {
+          category:
+          {
+            name: @category.name
+          },
+
+          posts_data: @category.posts.map do |post|
             {
-              name: c.name,
+              title: post.title,
+              content: post.content,
+              image: post.image,
+              privacy: post.privacy,
+              draft: post.draft,
+            }
+          end
+        }
+      else
+        @posts = Post.all
+        render json: {
+          posts_data: @posts.map do |post|
+            {
+              title: post.title,
+              content: post.content,
+              image: post.image,
+              privacy: post.privacy,
+              draft: post.draft,
             }
           end
         }
       end
-    }
+
+    end
   end
 
   def show
-    if @post.be_viewed_by?(current_user)
-      @reply = Reply.new
-      @replies = @post.replies.order("updated_at DESC").page(params[:page]).per(20)
-      @post.count_views
-      @post.save
-    else
-      flash[:alert] = 'The post is not open to you.'
-      redirect_back fallback_location: root_path
-    end
+    
     if !@post
       render json: {
         message: "can't find the post!",
         status: 400
       }
     else
+      @post.count_views
+      @replies = @post.replies
       render json: {
         title: @post.title,
         content: @post.content,
         image: @post.image,
-        categories: @post.categories.map do |c|
+        draft: @post.draft,
+        privacy: @post.privacy,
+
+        categories_data: @post.categories.map do |c|
           {
             name: c.name,
           }
         end,
-        replies: @post.replies.map do |reply|
+        replies_data: @post.replies.map do |reply|
           {
             user: reply.user.name,
             comment: reply.comment,
           }
-        end
+        end,
       }
     end
-    
+  end
+
+  def create
+    @post = Post.new(post_params)
+
+    if @post.save
+      render json: {
+        message: "A Post has been created.",
+        result: @post
+      }
+    else
+      render json: {
+        errors: @post.erros
+      }
+    end
+  end
+
+  def update
+    if @post.update(post_params)
+      render json: {
+        message: "Post updated successfully!",
+        result: @post
+      }
+    else
+      render json: {
+        errors: @post.errors
+      }
+    end
+  end
+
+   def destroy
+    @post.destroy
+    render json: {
+      message: "Post destroy successfully!"
+    }
   end
 
 
