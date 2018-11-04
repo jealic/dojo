@@ -1,4 +1,7 @@
 <div class="container">
+  <% if current_user %>
+    <p class="pull-right">你的 API Token：<code><%= current_user.authentication_token  %></code></p>
+  <% end %>
   <div class="margin-top-50">
     <h1 class="page-title-h1"><%= link_to 'World Wild', root_path, style: 'color: #000; text-decoration: none;' %></h1>  
   </div>
